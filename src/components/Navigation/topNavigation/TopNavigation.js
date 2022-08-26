@@ -16,7 +16,7 @@ const TopNavigation = () => {
             />
           </Link>
         </div>
-        <ul className="flex items-center gap-x-6">
+        <ul className="flex items-center gap-x-6 ml-6">
           {navigation.map((nav, index) => {
             return (
               <li key={index}>
@@ -35,12 +35,12 @@ const TopNavigation = () => {
           })}
         </ul>
         <div className="flex items-center justify-center gap-x-6">
-          <div className="flex items-center justify-center relative">
+          <div className={show ? "flex items-center justify-center relative w-full" : "flex items-center justify-center relative"}>
             <span
               onClick={() => setShow(!show)}
               className={
                 show
-                  ? " text-xl absolute left-2 cursor-pointer z-20 transition-all ease-linear duration-300"
+                  ? "text-xl absolute left-2 cursor-pointer z-20 transition-all ease-linear duration-300 "
                   : "text-xl absolute right-2 cursor-pointer transition-all ease-linear duration-300"
               }
             >
