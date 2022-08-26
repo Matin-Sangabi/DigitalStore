@@ -1,21 +1,6 @@
-import {
-  HiOutlineHome,
-  HiOutlineViewGrid,
-  HiOutlineShoppingCart,
-  HiOutlineUser,
-  HiOutlineBookOpen,
-} from "react-icons/hi";
 import { NavLink} from "react-router-dom";
-const navigation = [
-  { to: "/", icon: <HiOutlineHome />, name: "خانه" },
-  { to: "/categories", icon: <HiOutlineViewGrid />, name: "دستهبندی" },
-  { to: "/cart", icon: <HiOutlineShoppingCart />, name: "سبد خرید" },
-  { to: "/news", icon: <HiOutlineBookOpen />, name: "اخبار" },
-  { to: "/profile", icon: <HiOutlineUser />, name: "پروفایل" },
-];
-
+import { navigation } from "../../../utils/Navigation";
 const BottomNav = () => {
-
   return (
     <nav className="fixed bottom-0 left-0 bg-white shadow-sm rounded-t-[50%]  w-full p-6 md:hidden   flex justify-center items-center">
       <ul className="flex items-center w-full justify-between">
@@ -26,11 +11,12 @@ const BottomNav = () => {
                 to={nav.to}
                 className={({ isActive }) =>
                   isActive
-                    ? `animate-wiggle  p-2 text-2xl flex  rounded-full bg-cyan-900 text-slate-100  items-center justify-center gap-x-2`
-                    : "rotate-0 p-0 text-slate-900 relative text-xl"
+                    ? `animate-wiggle  p-2 text-2xl flex  rounded-full text-slate-100  items-center justify-center gap-x-2 bg-cyan-900`
+                    : "rotate-0 p-0 text-slate-900 relative text-xl "
                 }
+                
               >
-                <span>{nav.icon}</span>
+                <span>{nav.icon()}</span>
               </NavLink>
             </li>
           );
