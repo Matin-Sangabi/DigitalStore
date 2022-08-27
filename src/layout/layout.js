@@ -5,8 +5,8 @@ const Layout = ({ children }) => {
   return (
     <div>
        <TopNavigation/> 
+      <div className="mx-auto max-w-screen-2xl container z-10">{children}</div>
       <BottomNav />
-      <div className="mx-auto max-w-screen-2xl container p-4 z-10">{children}</div>
     </div>
   );
 };

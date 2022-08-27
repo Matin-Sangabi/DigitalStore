@@ -5,7 +5,7 @@ import { useState } from "react";
 const TopNavigation = () => {
   const [show, setShow] = useState(false);
   return (
-    <nav className="w-full bg-gray-300  p-6 shadow-sm shadow-gray-400 hidden md:block">
+    <nav className="w-full bg-gray-300  p-6 hidden md:block fixed bg-transparent z-50">
       <div className="max-w-screen-2xl w-full mx-auto flex items-center justify-between">
         <div className="flex flex-col items-center justify-center">
           <Link to="/">
@@ -35,7 +35,7 @@ const TopNavigation = () => {
           })}
         </ul>
         <div className="flex items-center justify-center gap-x-6">
-          <div className={show ? "flex items-center justify-center relative w-full" : "flex items-center justify-center relative"}>
+          <div className={show ? "flex items-center justify-center relative w-full" : "flex items-center justify-center relative w-5"}>
             <span
               onClick={() => setShow(!show)}
               className={
