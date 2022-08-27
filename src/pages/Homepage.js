@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import WellComeSection from "../components/wellcomeSection/welcomeSection";
 import Layout from "../layout/layout";
 import { getProducts } from "../services/getProductsServicess";
