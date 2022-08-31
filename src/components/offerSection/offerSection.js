@@ -5,7 +5,7 @@ const OfferSection = () => {
                 <h1 className="text-xl">summer</h1>
                 <h2 className="text-4xl font-bold tracking-widest"><span className="border-b-2 py-2 border-gray-800 ">Sale</span> Off </h2>
             </div>
-            <div className="col-span-12 md:col-span-8 flex items-center md:justify-end overflow-x-auto mb-4 w-full gap-x-8">
+            <div className="col-span-12 md:col-span-8 flex flex-nowrap items-center md:justify-end overflow-x-auto mb-4 w-full gap-x-8 md:gap-x-12">
                 <div className="flex flex-col items-center">
                     <div className="w-40 h-auto relative flex items-center">
                         <img src={require("./../../assets/images/airpod/MME73-removebg-preview.png")} alt="ma,e1" className="max-w-full h-auto object-cover"/>

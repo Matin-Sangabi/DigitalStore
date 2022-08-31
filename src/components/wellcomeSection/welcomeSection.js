@@ -1,14 +1,31 @@
+import { useEffect, useState } from "react";
 import { BsCpu } from "react-icons/bs";
 import { IoBatteryFullOutline ,IoLogoAppleAppstore ,IoArrowForwardOutline} from "react-icons/io5";
 import { Link } from "react-router-dom";
+import { getOneProducts } from "../../services/getOneProducts";
 const WellComeSection = () => {
+  const id = "630fb5b4edfad30e28f5c395";
+  const [product , setProducts] = useState(false);
+  useEffect(()=>{
+    const getProduct = async () =>{
+        try{
+            const {data} = await getOneProducts(id);
+            setProducts(data);
+        }
+        catch(err){
+            console.log(console.log(err))
+        }
+    }
+    getProduct()
+  }, []);
+  console.log(product)
   return (
     <section className="w-full relative overflow-hidden z-0 pt-36 pb-28 px-0 flex items-center before:content-[''] before:absolute before:-right-full before:top-[30%]   before:w-[260%] before:h-[200%] before:bg-gray-400 before:opacity-50  before:-z-10 before:skew-y-[135deg] mb-20 ">
         <div className="container max-w-screen-xl mx-auto">
             <div className="grid grid-cols-12 w-full px-4">
                 <div className="col-span-12 md:col-span-6 flex flex-col gap-y-6 justify-center  order-2 md:order-1">
                     <div className="flex flex-col gap-y-2">
-                        <h1 className="text-2xl text-gray-800 font-bold ">Iphone 13 pro Max</h1>
+                        <h1 className="text-2xl text-gray-800 font-bold ">{product.name}</h1>
                         <h1 className="text-gray-800 font-bold text-4xl md:px-4 md:text-5xl lg:text-6xl"> has the best battery life ever on iPhone.</h1>
                     </div>
                     <p className="text-gray-500 text-base lg:text-lg">There’s no phone like iPhone.</p>
