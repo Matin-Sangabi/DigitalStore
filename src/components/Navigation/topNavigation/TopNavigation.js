@@ -25,7 +25,7 @@ const TopNavigation = () => {
                   className={({ isActive }) =>
                     isActive
                       ? "block font-bold text-gray-800 border-b-2 py-2 border-gray-800 tracking-wide transition-all ease-in-out duration-300"
-                      : "text-gray-600 font-medium"
+                      : "text-gray-600 font-medium hover:block hover:text-gray-800 hover:border-b-2 hover:py-2 hover:border-gray-500 hover:font-bold transition-all ease-out duration-300 "
                   }
                 >
                   {nav.name}

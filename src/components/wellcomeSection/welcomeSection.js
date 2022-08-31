@@ -3,7 +3,7 @@ import { IoBatteryFullOutline ,IoLogoAppleAppstore ,IoArrowForwardOutline} from 
 import { Link } from "react-router-dom";
 const WellComeSection = () => {
   return (
-    <section className="w-full relative overflow-hidden z-0 pt-36 pb-28 px-0 flex items-center before:content-[''] before:absolute before:-right-full  before:w-[300%] before:h-[200%] before:bg-gray-400 before:opacity-50  before:-z-10 before:skew-y-[135deg] ">
+    <section className="w-full relative overflow-hidden z-0 pt-36 pb-28 px-0 flex items-center before:content-[''] before:absolute before:-right-full before:top-[30%]   before:w-[260%] before:h-[200%] before:bg-gray-400 before:opacity-50  before:-z-10 before:skew-y-[135deg] mb-20 ">
         <div className="container max-w-screen-xl mx-auto">
             <div className="grid grid-cols-12 w-full px-4">
                 <div className="col-span-12 md:col-span-6 flex flex-col gap-y-6 justify-center  order-2 md:order-1">
@@ -48,17 +48,7 @@ const WellComeSection = () => {
                     <div className="md:w-96 md:h-auto md:max-h-96">
                         <img src={require("./../../assets/images/phone/iphone-13-pro-model-unselect-gallery-2-202207_GEO_US.png")} className="max-w-full w-[330px] h-auto object-cover" alt="name"/>
                     </div>
-                    <div className="flex gap-4 md:absolute md:bottom-2 md:right-5">
-                        <div className="w-20 h-20 ring ring-gray-500  rounded-md flex justify-center items-center hover:ring-5 hover:ring-cyan-900 cursor-pointer transition-all ease-in-out duration-500 ">
-                            <img src={require("./../../assets/images/phone/iphone-13-finish-select-202207-6-1inch-midnight.png")} className="max-w-full w-[50px] h-auto object-cover" alt="slide-pic"/>
-                        </div>
-                        <div className="w-20 h-20 ring ring-gray-500  rounded-md flex justify-center items-center hover:ring-cyan-900 cursor-pointer transition-all ease-in-out duration-500 ">
-                            <img src={require("./../../assets/images/phone/iphone-13-finish-select-202207-6-1inch-midnight_AV1_GEO_US.png")} className="max-w-full w-[50px] h-auto object-cover" alt="slide-pic"/>
-                        </div>
-                        <div className="w-20 h-20 ring ring-gray-500  rounded-md flex justify-center items-center hover:ring-cyan-900 cursor-pointer transition-all ease-in-out duration-500 ">
-                            <img src={require("./../../assets/images/phone/iphone-13-pro-model-unselect-gallery-2-202207_GEO_US.png")} className="max-w-full w-[50px] h-auto object-cover " alt="slide-pic"/>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
         </div>

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import OfferSection from "../components/offerSection/offerSection";
 import WellComeSection from "../components/wellcomeSection/welcomeSection";
 import Layout from "../layout/layout";
 import { getProducts } from "../services/getProductsServicess";
@@ -20,6 +21,10 @@ const HomePage = () => {
   return (
     <Layout>
       <WellComeSection/>
+      <div className="max-w-screen-2xl mx-auto">
+        <OfferSection/>
+        <div></div>
+      </div>
     </Layout>
   );
 };
