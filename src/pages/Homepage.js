@@ -17,7 +17,6 @@ const HomePage = () => {
     };
     getAllProducts();
   }, []);
-  console.log(products)
   return (
     <Layout>
       <WellComeSection/>
