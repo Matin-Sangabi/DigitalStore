@@ -8,7 +8,7 @@ import {
   
   export const navigation = [
     { to: "/", icon:() => <HiOutlineHome />, name: "Home" },
-    { to: "/categories", icon:() => <HiOutlineViewGrid />, name: "Categories" },
+    { to: "/products", icon:() => <HiOutlineViewGrid />, name: "products" },
     { to: "/cart", icon:() => <HiOutlineShoppingCart />, name: "Cart" },
     { to: "/news", icon:() => <HiOutlineBookOpen />, name: "News" },
     { to: "/profile", icon:() => <HiOutlineUser />, name: "Profile" },

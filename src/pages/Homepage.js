@@ -1,23 +1,12 @@
-import { useEffect, useState } from "react";
 import CategoriesSection from "../components/categoriesSection/categoriesSection";
 import OfferSection from "../components/offerSection/offerSection";
 import WellComeSection from "../components/wellcomeSection/welcomeSection";
 import Layout from "../layout/layout";
-import { getProducts } from "../services/getProductsServicess";
+import { useProducts } from "../provider/productsProvider";
 
 const HomePage = () => {
-  const [products, setProducts] = useState(false);
-  useEffect(() => {
-    const getAllProducts = async () => {
-      try {
-        const { data } = await getProducts();
-        setProducts(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getAllProducts();
-  }, []);
+  const products = useProducts();
+  console.log(products)
   return (
     <Layout>
       <WellComeSection/>
