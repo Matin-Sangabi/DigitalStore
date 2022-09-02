@@ -6,6 +6,7 @@ const CategoriesSection = () => {
       <div className="flex flex-col gap-y-2 text-gray-800">
         <h1 className="font-semibold">Our</h1>
         <h2 className="text-4xl font-bold tracking-widest"><span className="border-b-2 py-2 border-gray-800 ">Categ</span>Ories</h2>
+        
       </div>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12  lg:w-3/4 w-full mx-auto lg:mx-0">
         <Link
@@ -24,7 +25,7 @@ const CategoriesSection = () => {
           </div>
         </Link>
         <Link
-          to="/categories"
+          to="/products?cat=phone"
           className="text-base text-gray-600 bg-gray-200 shadow-md shadow-gray-200 px-4 py-2 rounded-md flex items-center justify-between hover:shadow-2xl hover:shadow-gray-300  hover:bg-gray-400 hover:text-gray-800 hover:text-xl transition-all ease-in-out duration-500"
         >
           <div className="col-span-8 flex items-center justify-center">
@@ -39,7 +40,7 @@ const CategoriesSection = () => {
           </div>
         </Link>
         <Link
-          to="/categories"
+          to="/products?cat=ipad"
           className="text-base text-gray-600 bg-gray-200 shadow-md shadow-gray-200 px-4 py-2 rounded-md flex items-center justify-between hover:shadow-2xl hover:shadow-gray-300  hover:text-xl hover:bg-gray-400 hover:text-gray-800 transition-all ease-in-out duration-500"
         >
           <div className="col-span-8 flex items-center justify-center">
@@ -55,7 +56,7 @@ const CategoriesSection = () => {
         </Link>
 
         <Link
-          to="/categories"
+          to="/products?cat=air pod"
           className="text-base text-gray-600 bg-gray-200 shadow-md shadow-gray-200 px-4 py-2 rounded-md flex items-center justify-between hover:shadow-2xl hover:shadow-gray-300 hover:text-xl hover:bg-gray-400 hover:text-gray-800 transition-all ease-in-out duration-500"
         >
           <div className="col-span-8 flex items-center justify-center">

@@ -3,7 +3,7 @@ import { getProducts } from "../services/getProductsServicess";
 const productsContext = createContext();
 
 const ProductsProvider = ({children}) => {
-    const [products, setProducts] = useState(false);
+    const [products, setProducts] = useState([]);
   useEffect(() => {
     const getAllProducts = async () => {
       try {
