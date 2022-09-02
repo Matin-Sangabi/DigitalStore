@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import CategoriesSection from "../components/categoriesSection/categoriesSection";
 import OfferSection from "../components/offerSection/offerSection";
 import WellComeSection from "../components/wellcomeSection/welcomeSection";
 import Layout from "../layout/layout";
@@ -17,11 +18,11 @@ const HomePage = () => {
     };
     getAllProducts();
   }, []);
-  console.log(products)
   return (
     <Layout>
       <WellComeSection/>
       <div className="max-w-screen-xl mx-auto">
+        <CategoriesSection/>  
         <OfferSection/>
         <div></div>
       </div>
