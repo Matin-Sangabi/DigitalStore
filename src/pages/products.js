@@ -2,17 +2,18 @@ import Layout from "../layout/layout";
 import { Link, NavLink, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useProducts } from "../provider/productsProvider";
-import { HiOutlineViewGrid , HiOutlineDeviceTablet } from "react-icons/hi";
-import { IoPhonePortraitOutline , IoLaptopOutline , IoWatchOutline ,IoRecordingOutline } from "react-icons/io5";
-const categories = [
-  {name : "All" , path : "" , icon : () => HiOutlineViewGrid },
-  {name : "IPhone" , path : "phone" , icon : () => IoPhonePortraitOutline },
-  {name : "MacBook" , path : "Mac" , icon : () => IoLaptopOutline },
-  {name : "AppleWatch" , path : "watch" , icon : () => IoWatchOutline },
-  {name : "AirPod" , path : "air pod" , icon : () => IoRecordingOutline },
-  {name : "IPad" , path : "ipad" , icon : () => HiOutlineDeviceTablet },
-]
-
+import { Disclosure } from "@headlessui/react";
+import {
+  HiOutlineViewGrid,
+  HiOutlineDeviceTablet,
+  HiChevronDown,
+} from "react-icons/hi";
+import {
+  IoPhonePortraitOutline,
+  IoLaptopOutline,
+  IoWatchOutline,
+  IoRecordingOutline,
+} from "react-icons/io5";
 
 const ProductsPage = () => {
   const [search] = useSearchParams();
@@ -29,28 +30,13 @@ const ProductsPage = () => {
       setFilterProducts(products);
     }
   }, [products, productsCategories]);
-  console.log(filterProducts)
+  console.log(filterProducts);
   return (
     <Layout>
-      <div className="container mx-auto max-w-screen-xl px-4 grid grid-cols-12 grid-rows-[55px_minmax(500px,_1fr)] md:gap-8">
-        <div className="hidden md:block md:col-span-4 lg:col-span-3  row-span-2">
-          <div className="bg-gray-300 shadow-md p-5 rounded-xl max-h-[calc(300vh-120px)] overflow-auto  sticky md:top-[4.3rem] lg:top-[6.7rem]">
-            <h1 className="text-xl font-bold text-gray-800 border-b-2 py-2 border-gray-600">
-              Categories
-            </h1>
-            <ul className="mt-4 flex flex-col gap-2">
-              {categories.map((cat , index)=>{
-                return(
-                  <li key={index}>
-                    <NavLink to={`/products?cat=${cat.path}`} className="block p-2 hover:bg-gray-500 transition-all ease-in-out duration-500 rounded-md text-gray-900 hover:text-gray-200">{cat.name}</NavLink>
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        </div>
+      <div className="container mx-auto max-w-screen-xl px-4 grid grid-cols-12 grid-rows-[55px_minmax(500px,_1fr)] md:gap-8 pt-36">
+        <SortSection />
         <div className="col-span-12 md:col-span-8 lg:col-span-9 ">
-          <section className="pt-36 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4  mx-auto gap-8 px-4 ">
+          <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4  mx-auto gap-8 px-4 ">
             {filterProducts.map((item, index) => {
               return (
                 <div
@@ -94,3 +80,77 @@ const ProductsPage = () => {
 };
 
 export default ProductsPage;
+const SortProducts = [
+  {
+    title: "Categories",
+    content: [
+      { name: "All", path: "", icon: () => <HiOutlineViewGrid /> },
+      { name: "IPhone", path: "phone", icon: () => <IoPhonePortraitOutline/> },
+      { name: "MacBook", path: "Mac", icon: () => <IoLaptopOutline /> },
+      { name: "AppleWatch", path: "watch", icon: () => <IoWatchOutline /> },
+      { name: "AirPod", path: "air pod", icon: () => <IoRecordingOutline /> },
+      { name: "IPad", path: "ipad", icon: () => <HiOutlineDeviceTablet /> },
+    ],
+  },
+  {
+    title: "colors",
+    content: [
+      { name: "Red", path: "Red" },
+      { name: "Blue", path: "Blue" },
+      { name: "Black", path: "Black" },
+      { name: "gray", path: "gray" },
+      { name: "purple", path: "purple" },
+    ],
+  },
+];
+const SortSection = () => {
+  return (
+    <div className="hidden md:block md:col-span-4 lg:col-span-3  row-span-2">
+      <div className="bg-gray-300 shadow-lg p-5 rounded-xl ">
+        {SortProducts.map((product, index) => {
+          return (
+            <div key={index}>
+              <Disclosure defaultOpen>
+                {({ open }) => (
+                  <>
+                    <Disclosure.Button  className="w-full flex justify-between items-center border-b-2 py-2 border-gray-600 text-gray-800">
+                      <h1 className="font-bold text-lg">{product.title}</h1>
+                      <HiChevronDown
+                        className={`${
+                          open 
+                            ? "rotate-180 transform transition-all ease-in-out duration-500"
+                            : ""
+                        }  h-5 w-5 text-gray-800`}
+                      />
+                    </Disclosure.Button>
+                    <Disclosure.Panel className="pt-4 pb-2 text-gray-700">
+                      <ul
+                        className={"mt-4 flex flex-col gap-2 mb-6 transition-all ease-in-out duration-500"}
+                      >
+                        {product.content.map((item, index) => {
+                          return (
+                            <li key={index} className="flex gap-x-2 items-center">
+                              {item.icon && <span className="p-2 rounded-full bg-cyan-900 bg-opacity-75 text-lg text-gray-200">{item.icon()}</span>}
+                              <NavLink
+                                to={`/products?cat=${item.path}`}
+                                className={
+                                  "block p-2 w-full hover:bg-cyan-900 transition-all ease-in-out duration-500 rounded-md text-gray-900 hover:text-gray-200"
+                                }
+                              >
+                                {item.name}
+                              </NavLink>
+                            </li>
+                          );
+                        })}
+                      </ul>
+                    </Disclosure.Panel>
+                  </>
+                )}
+              </Disclosure>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
