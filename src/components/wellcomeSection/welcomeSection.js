@@ -8,7 +8,7 @@ import {
 import { Link } from "react-router-dom";
 import { getOneProducts } from "../../services/getOneProducts";
 const WellComeSection = () => {
-  const id = "6310d99844a2a61e384cd30c";
+  const id = "6311b192bc7cba0ff0888bfd";
   const [product, setProducts] = useState(false);
   useEffect(() => {
     const getProduct = async () => {
@@ -96,14 +96,14 @@ const Description = ({ product }) => {
         return { ...item.system, icon: icons.chipSet };
       case "battery":
         return { ...item.system, icon: icons.battery };
+      default:
+        return { ...item.system };
     }
   });
-  return productDesc.map((item , index) => {
+  return productDesc.map((item, index) => {
     return (
       <div className="flex gap-x-2" key={index}>
-        <span className="text-xl">
-          {item.icon}
-        </span>
+        <span className="text-xl">{item.icon}</span>
         <div className="flex flex-col">
           <p className="text-base">{item.title}</p>
           <p className="text-gray-400">{item.sub}</p>

@@ -17,10 +17,11 @@ const HomePage = () => {
     };
     getAllProducts();
   }, []);
+  console.log(products)
   return (
     <Layout>
       <WellComeSection/>
-      <div className="max-w-screen-2xl mx-auto">
+      <div className="max-w-screen-xl mx-auto">
         <OfferSection/>
         <div></div>
       </div>

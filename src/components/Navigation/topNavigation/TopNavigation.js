@@ -1,12 +1,26 @@
 import { Link, NavLink } from "react-router-dom";
 import { navigation } from "../../../utils/Navigation";
 import { RiSearch2Line, RiShoppingBag3Line } from "react-icons/ri";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const TopNavigation = () => {
   const [show, setShow] = useState(false);
+  const [navbarColor , setNavbarColor] = useState(false);
+  useEffect(()=>{
+    const changeNavbarColor = () =>{
+      const scroll = window.scrollY;
+      if(scroll >= 98) {
+        setNavbarColor(true);
+      }
+      else{
+        setNavbarColor(false);
+      }
+    }
+    window.addEventListener("scroll" , changeNavbarColor)
+  } , [])
+
   return (
-    <nav className="w-full bg-gray-300  p-6 hidden md:block fixed bg-transparent z-50">
-      <div className="max-w-screen-2xl w-full mx-auto flex items-center justify-between">
+    <nav className={navbarColor ? "w-full p-4 hidden md:block fixed bg-gray-300 z-50 transition-all ease-in-out duration-300" : "w-full  p-6 hidden md:block fixed bg-transparent z-50 transition-all ease-in-out duration-300"}>
+      <div className="max-w-screen-xl w-full mx-auto flex items-center justify-between">
         <div className="flex flex-col items-center justify-center">
           <Link to="/">
             <img
