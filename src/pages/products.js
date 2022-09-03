@@ -39,7 +39,10 @@ const ProductsPage = () => {
           <div className="py-2 p-2 bg-cyan-900 text-slate-100 rounded-md">
             <HiOutlineSortDescending className="w-5 h-5" />
           </div>
-          <FilterProductsList filterProducts = {filterProducts} setFilterProducts={setFilterProducts}/>
+          <FilterProductsList
+            filterProducts={filterProducts}
+            setFilterProducts={setFilterProducts}
+          />
         </div>
         <div className="col-span-12 md:col-span-8 lg:col-span-9 mt-8">
           <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4  mx-auto gap-8 px-4 ">
@@ -176,37 +179,50 @@ const ProductsList = ({ filterProducts }) => {
   );
 };
 
-const FilterProductsList = ({filterProducts , setFilterProducts}) => {
+const FilterProductsList = ({ filterProducts, setFilterProducts }) => {
+  const [isActive, setIsActive] = useState(false);
   const filters = [
-    {name : "Most Popular" , value : "popular"},
-    {name : "Most Visited" , value : "Visited"},
-    {name : "the most expensive" , value : "expensive"},
-    {name : "The cheapest" , value : "cheapest"},
+    { name: "Most Popular", value: "popular" },
+    { name: "Most Visited", value: "Visited" },
+    { name: "the most expensive", value: "expensive" },
+    { name: "The cheapest", value: "cheapest" },
   ];
-  const filteredProductsListItem = (e) =>{
-    switch(e.target.value){
-      case 'expensive' : {
-        const sortFilter = [...filterProducts].sort((a ,b)=>{
+  const filteredProductsListItem = (e, item) => {
+    setIsActive(item);
+    switch (e.target.value) {
+      case "expensive": {
+        const sortFilter = [...filterProducts].sort((a, b) => {
           return a.price > b.price ? -1 : 1;
-        })
-        return setFilterProducts(sortFilter)
+        });
+        return setFilterProducts(sortFilter);
       }
-      case 'cheapest' : {
-        const sortFilter = [...filterProducts].sort((a ,b)=>{
+      case "cheapest": {
+        const sortFilter = [...filterProducts].sort((a, b) => {
           return a.price > b.price ? 1 : -1;
-        })
+        });
         return setFilterProducts(sortFilter);
       }
     }
-  }
+  };
   return (
     <div className="flex items-center gap-x-8 px-4">
-      {filters.map((item , index)=>{
-        return(
-          <button key={index} value={item.value} onClick={filteredProductsListItem} type="button" className="font-semibold text-gray-400 cursor-pointer hover:border-b-2 hover:border-gray-600 hover:py-2 transition-all ease-in-out duration-500">
+      {filters.map((item, index) => {
+        return (
+          <button
+            key={index}
+            value={item.value}
+            onClick={(e) => filteredProductsListItem(e, item.value)}
+            type="button"
+            className={
+              isActive === item.value
+                ? "text-gray-800 py-2  font-semibold text-base transition-all ease-linear duration-300 relative"
+                : "text-gray-500 text-sm hover:py-2 hover:border-b hover:border-gray-800 hover:text-gray-800 transition-all ease-linear duration-300 hover:font-semibold"
+            }
+          >
+            {isActive === item.value && <span className="p-1 bg-cyan-900 rounded-full absolute right-0 top-0"></span>}
             {item.name}
           </button>
-        )
+        );
       })}
     </div>
   );
