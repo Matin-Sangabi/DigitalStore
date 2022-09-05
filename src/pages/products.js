@@ -18,7 +18,9 @@ import {
 
 const ProductsPage = () => {
   const [search] = useSearchParams();
+  // const [range] = useSearchParams();
   const productsCategories = search.get("cat") || "";
+  // const productsRangePrice = range.get("range")
   const products = useProducts();
   const [filterProducts, setFilterProducts] = useState([]);
   useEffect(() => {
@@ -31,10 +33,11 @@ const ProductsPage = () => {
       setFilterProducts(products);
     }
   }, [products, productsCategories]);
+ 
   return (
     <Layout>
       <div className="container mx-auto max-w-screen-xl px-4 grid grid-cols-12 grid-rows-[55px_minmax(500px,_1fr)] md:gap-8 pt-32">
-        <SortSection />
+        <SortSection products={products} setFilterProducts={setFilterProducts} />
         <div className="col-span-12 md:col-span-8 lg:col-span-9 bg-gray-300 shadow-md rounded-md hidden md:flex items-center p-4">
           <div className="py-2 p-2 bg-cyan-900 text-slate-100 rounded-md">
             <HiOutlineSortDescending className="w-5 h-5" />
@@ -78,14 +81,21 @@ const SortProducts = [
     ],
   },
 ];
-const SortSection = () => {
+const SortSection = ({products , setFilterProducts}) => {
+  const [range, setRange] = useState(0);
+  const changeHandler = (e) => {
+    setRange(e.target.value);
+    // navigate(`/products?cat=""&range=${e.target.value}`);
+    const filter = [...products].filter( p=> p.price  >= e.target.value);
+    setFilterProducts(filter);
+  };
   return (
     <div className="hidden md:block md:col-span-4 lg:col-span-3  row-span-2">
       <div className="bg-gray-300 shadow-lg p-5 rounded-xl ">
         {SortProducts.map((product, index) => {
           return (
             <div key={index}>
-              <Disclosure defaultOpen>
+              <Disclosure>
                 {({ open }) => (
                   <>
                     <Disclosure.Button className="w-full flex justify-between items-center border-b-2 py-2 border-gray-600 text-gray-800">
@@ -134,6 +144,38 @@ const SortSection = () => {
             </div>
           );
         })}
+        <div>
+          <Disclosure defaultOpen>
+            {({ open }) => (
+              <>
+                <Disclosure.Button className="w-full flex justify-between items-center border-b-2 py-2 border-gray-600 text-gray-800">
+                  <h1 className="font-bold text-lg">Price : </h1>
+                  <HiChevronDown
+                    className={`${
+                      open
+                        ? "rotate-180 transform transition-all ease-in-out duration-500"
+                        : "rotate-0 transition-all ease-in-out duration-500"
+                    }  h-5 w-5 text-gray-800`}
+                  />
+                </Disclosure.Button>
+                <Disclosure.Panel className="pt-4 pb-2 text-gray-700">
+                  
+                  <input
+                    max="1200"
+                    type="range"
+                    onChange={changeHandler}
+                    className="mb-6 w-full h-1 bg-gray-500 rounded-lg appearance-none cursor-pointer range-sm "
+                  />
+                  <label
+                    className="block mb-2 text-lg  text-cyan-900 text-center font-bold"
+                  >
+                    {range} $
+                  </label>
+                </Disclosure.Panel>
+              </>
+            )}
+          </Disclosure>
+        </div>
       </div>
     </div>
   );
@@ -180,7 +222,7 @@ const ProductsList = ({ filterProducts }) => {
 };
 
 const FilterProductsList = ({ filterProducts, setFilterProducts }) => {
-  const [isActive, setIsActive] = useState(false);
+  const [isActive, setIsActive] = useState("popular");
   const filters = [
     { name: "Most Popular", value: "popular" },
     { name: "Most Visited", value: "Visited" },
@@ -202,6 +244,8 @@ const FilterProductsList = ({ filterProducts, setFilterProducts }) => {
         });
         return setFilterProducts(sortFilter);
       }
+      default:
+        return setFilterProducts([...filterProducts]);
     }
   };
   return (
@@ -219,7 +263,9 @@ const FilterProductsList = ({ filterProducts, setFilterProducts }) => {
                 : "text-gray-500 text-sm hover:py-2 hover:border-b hover:border-gray-800 hover:text-gray-800 transition-all ease-linear duration-300 hover:font-semibold"
             }
           >
-            {isActive === item.value && <span className="p-1 bg-cyan-900 rounded-full absolute right-0 top-0"></span>}
+            {isActive === item.value && (
+              <span className="p-1 bg-cyan-900 rounded-full absolute right-0 top-0"></span>
+            )}
             {item.name}
           </button>
         );
