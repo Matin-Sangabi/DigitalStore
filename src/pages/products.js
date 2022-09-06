@@ -15,12 +15,11 @@ import {
   IoWatchOutline,
   IoRecordingOutline,
 } from "react-icons/io5";
+import RangeSlider from "../components/RangerSlider/RangerSlider";
 
 const ProductsPage = () => {
   const [search] = useSearchParams();
-  // const [range] = useSearchParams();
   const productsCategories = search.get("cat") || "";
-  // const productsRangePrice = range.get("range")
   const products = useProducts();
   const [filterProducts, setFilterProducts] = useState([]);
   useEffect(() => {
@@ -33,11 +32,14 @@ const ProductsPage = () => {
       setFilterProducts(products);
     }
   }, [products, productsCategories]);
- 
+
   return (
     <Layout>
       <div className="container mx-auto max-w-screen-xl px-4 grid grid-cols-12 grid-rows-[55px_minmax(500px,_1fr)] md:gap-8 pt-32">
-        <SortSection products={products} setFilterProducts={setFilterProducts} />
+        <SortSection
+          products={products}
+          setFilterProducts={setFilterProducts}
+        />
         <div className="col-span-12 md:col-span-8 lg:col-span-9 bg-gray-300 shadow-md rounded-md hidden md:flex items-center p-4">
           <div className="py-2 p-2 bg-cyan-900 text-slate-100 rounded-md">
             <HiOutlineSortDescending className="w-5 h-5" />
@@ -81,13 +83,12 @@ const SortProducts = [
     ],
   },
 ];
-const SortSection = ({products , setFilterProducts}) => {
-  const [range, setRange] = useState(0);
-  const changeHandler = (e) => {
-    setRange(e.target.value);
-    // navigate(`/products?cat=""&range=${e.target.value}`);
-    const filter = [...products].filter( p=> p.price  >= e.target.value);
-    setFilterProducts(filter);
+const SortSection = ({ products, setFilterProducts }) => {
+  
+  const changeHandler = (value) => {
+
+    const filter = [...products].filter((p) => p.price >= value.min && p.price<=value.max);
+    setFilterProducts(filter)
   };
   return (
     <div className="hidden md:block md:col-span-4 lg:col-span-3  row-span-2">
@@ -159,18 +160,7 @@ const SortSection = ({products , setFilterProducts}) => {
                   />
                 </Disclosure.Button>
                 <Disclosure.Panel className="pt-4 pb-2 text-gray-700">
-                  
-                  <input
-                    max="1200"
-                    type="range"
-                    onChange={changeHandler}
-                    className="mb-6 w-full h-1 bg-gray-500 rounded-lg appearance-none cursor-pointer range-sm "
-                  />
-                  <label
-                    className="block mb-2 text-lg  text-cyan-900 text-center font-bold"
-                  >
-                    {range} $
-                  </label>
+                    <RangeSlider  changeHandler={changeHandler}/>
                 </Disclosure.Panel>
               </>
             )}
@@ -273,3 +263,16 @@ const FilterProductsList = ({ filterProducts, setFilterProducts }) => {
     </div>
   );
 };
+
+
+//range slider
+
+/*
+<input
+max="1200"
+step="100"
+type="range"
+onChange={changeHandler}
+className="mb-6 w-full h-1 bg-gray-500 rounded-lg appearance-none cursor-pointer range-sm "
+/>
+*/
