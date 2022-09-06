@@ -8,8 +8,8 @@ import {
 import { Link } from "react-router-dom";
 import { getOneProducts } from "../../services/getOneProducts";
 const WellComeSection = () => {
-  const id = "6313a3dfbda7d60e40398c04";
   const [product, setProducts] = useState(false);
+  const id = "6311b192bc7cba0ff0888bfd";
   useEffect(() => {
     const getProduct = async () => {
       try {
