@@ -86,13 +86,12 @@ const SortProducts = [
 const SortSection = ({ products, setFilterProducts }) => {
   
   const changeHandler = (value) => {
-
     const filter = [...products].filter((p) => p.price >= value.min && p.price<=value.max);
     setFilterProducts(filter)
   };
   return (
-    <div className="hidden md:block md:col-span-4 lg:col-span-3  row-span-2">
-      <div className="bg-gray-300 shadow-lg p-5 rounded-xl ">
+    <div className="hidden md:block md:col-span-4 lg:col-span-3  row-span-2 sticky h-auto">
+      <div className="bg-gray-300 shadow-lg p-5 rounded-xl sticky top-[4.8rem] max-h-[calc(100vh-120px)] overflow-auto">
         {SortProducts.map((product, index) => {
           return (
             <div key={index}>
@@ -264,15 +263,3 @@ const FilterProductsList = ({ filterProducts, setFilterProducts }) => {
   );
 };
 
-
-//range slider
-
-/*
-<input
-max="1200"
-step="100"
-type="range"
-onChange={changeHandler}
-className="mb-6 w-full h-1 bg-gray-500 rounded-lg appearance-none cursor-pointer range-sm "
-/>
-*/
