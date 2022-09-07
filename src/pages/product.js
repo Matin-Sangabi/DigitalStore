@@ -5,8 +5,11 @@ import {
   IoInfinite,
   IoWatchOutline,
   IoTabletPortraitOutline,
+  IoBagHandleOutline,
 } from "react-icons/io5";
+import { TbTruckDelivery, TbAward } from "react-icons/tb";
 import { Link, useParams } from "react-router-dom";
+import TopNavigation from "../components/Navigation/topNavigation/TopNavigation";
 
 import { getOneProducts } from "../services/getOneProducts";
 const ProductPage = () => {
@@ -45,8 +48,10 @@ const ProductPage = () => {
     };
     productModel(product.categories);
   }, [product]);
+  console.log(product);
   return (
     <>
+      <TopNavigation />
       {product && (
         <section className="w-full grid grid-cols-12 pt-28 max-w-screen-xl mx-auto px-4 xl:px-0 ">
           <div className="col-span-12  lg:col-span-8">
@@ -87,7 +92,7 @@ const ProductPage = () => {
                   <h1 className="text-3xl text-gray-800 font-bold">
                     {product.name}
                   </h1>
-                  <h2 className=" text-gray-500">Apple iphone 13 128 Gb</h2>
+                  <h2 className=" text-gray-500">{product.model}</h2>
                 </div>
                 <hr className="border-gray-400" />
                 <div className="flex flex-col gap-y-4 px-4 text-gray-700">
@@ -143,18 +148,18 @@ const ProductPage = () => {
             </div>
           </div>
           <div className="hidden md:flex flex-col lg:col-span-4 items-end pt-8 h-auto">
-            <div className="bg-gray-400 shadow-lg rounded-lg w-2/3 sticky top-[5rem] p-4 flex flex-col gap-4 text-gray-800 ">
-              {product.description.map((item) => {
-                console.log(item)
-                return (
-                  <div className="flex gap-x-8" key={item._id}>
-                    <h1 className="font-semibold text-lg">{item.support}</h1>
-                  </div>
-                );
-              })}
-              <h1 className="text-lg text-cyan-900 font-bold">price : {product.price} $</h1>
-              <hr className="border-gray-500"/>
-              <Link to="/cart" className="p-4 bg-cyan-900 rounded-md text-slate-100 text-center font-bold">Add To cart </Link>
+            <div className="bg-gray-400 shadow-lg  rounded-lg sticky top-[5rem] p-4 flex flex-col gap-4 text-gray-800 ">
+              <ProductDescriptions product={product}/>
+              <h1 className="text-lg text-cyan-900 font-bold">
+                price : {product.discount !== 0  ? product.price - product.discount : product.price} $
+              </h1>
+              <hr className="border-gray-500" />
+              <Link
+                to="/cart"
+                className="p-4 bg-cyan-900 rounded-md text-slate-100 text-center font-bold"
+              >
+                Add To cart{" "}
+              </Link>
             </div>
           </div>
         </section>
@@ -164,3 +169,34 @@ const ProductPage = () => {
 };
 
 export default ProductPage;
+
+const ProductDescriptions = ({ product }) => {
+  const icons = {
+    deliver: TbTruckDelivery(),
+    warranty: TbAward(),
+    sale: IoBagHandleOutline(),
+  };
+  const productIcons = product.conditions.map((item) => {
+    switch (item.support.cat) {
+      case "warranty":
+        return { ...item.support, icon: icons.warranty };
+      case "deliver":
+        return { ...item.support, icon: icons.deliver };
+      case "seller":
+        return { ...item.support, icon: icons.sale };
+      default:
+        return { ...item.support };
+    }
+  });
+  return productIcons.map((item) => {
+    return (
+      <div className="flex gap-x-2 items-center" key={item._id}>
+        <div className="flex items-center gap-x-2 ">
+          <span className="text-xl text-cyan-900">{item.icon}</span>
+          <h1 className="font-bold">{item.title} : </h1>
+        </div>
+        <p className="text-sm font-semibold">{item.sub}</p>
+      </div>
+    );
+  });
+};
