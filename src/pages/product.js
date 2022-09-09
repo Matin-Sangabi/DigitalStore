@@ -10,8 +10,9 @@ import {
   IoCheckmarkSharp,
 } from "react-icons/io5";
 import { TbTruckDelivery, TbAward } from "react-icons/tb";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import TopNavigation from "../components/Navigation/topNavigation/TopNavigation";
+import { useCartAction } from "../provider/cartProvider";
 
 import { getOneProducts } from "../services/getOneProducts";
 
@@ -25,13 +26,16 @@ const Colors = [
 
 const ProductPage = () => {
   const [product, setProduct] = useState(false);
-  const [ChooseColors , setChooseColor ] = useState(false);
-
+  const [ChooseColors, setChooseColor] = useState(false);
+  const dispatch = useCartAction();
   const location = useParams();
   const id = location.id;
-  const cartProduct = (product , ChooseColors)=>{
-    console.log(product , ChooseColors)
-  }
+  const cartProduct = (product, ChooseColors) => {
+    if (ChooseColors) {
+      // const productDis = { ...product, color: ChooseColors };
+      dispatch({ type: "ADD_TO_CART", payload: product , color : ChooseColors });
+    }
+  };
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -50,7 +54,7 @@ const ProductPage = () => {
       {product && (
         <section className="w-full grid grid-cols-12 pt-28 max-w-screen-xl mx-auto px-4 xl:px-0 ">
           <div className="col-span-12  lg:col-span-8">
-            <ProductDetail product={product} setChooseColor={setChooseColor}/>
+            <ProductDetail product={product} setChooseColor={setChooseColor} />
           </div>
           <div className="hidden lg:flex flex-col lg:col-span-4 items-end pt-8 h-auto">
             <div className="bg-gray-400 shadow-lg  rounded-lg sticky top-[5rem] p-4 flex flex-col gap-4 text-gray-800 ">
@@ -66,7 +70,7 @@ const ProductPage = () => {
               <button
                 type="button"
                 className="p-4 bg-cyan-900 rounded-md text-slate-100 text-center font-bold"
-                onClick={()=> cartProduct(product , ChooseColors)}
+                onClick={() => cartProduct(product, ChooseColors)}
               >
                 Add To cart{" "}
               </button>
@@ -111,16 +115,18 @@ const ProductDescriptions = ({ product }) => {
   });
 };
 
-const ProductDetail = ({ product , setChooseColor }) => {
+const ProductDetail = ({ product, setChooseColor }) => {
   const [seeMore, setSeeMore] = useState(false);
   const [icons, setIcons] = useState();
   const [color, setColor] = useState(Colors);
   const chooseColorItem = (id) => {
-    const index = Colors.findIndex(c => c.id === id);
-    const itemList = {...Colors[index]};
-    if(itemList.isActive){
+    const index = Colors.findIndex((c) => c.id === id);
+    const itemList = { ...Colors[index] };
+    if (itemList.isActive) {
       itemList.isActive = false;
-    }else{itemList.isActive = true};
+    } else {
+      itemList.isActive = true;
+    }
     const colors = [...Colors];
     colors[index] = itemList;
     setChooseColor(itemList);
