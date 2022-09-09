@@ -1,5 +1,9 @@
+
 const CartReducer = (state , action) => {
     switch(action.type){
+        case "storage" : {
+            return {...state , cart : action.payload.cart , total : action.payload.total}
+        }
         case 'ADD_TO_CART' : {
             const updatedCart = [...state.cart];
             const cartIndex = updatedCart.findIndex(cart => cart._id === action.payload._id);//1-2-3
@@ -10,9 +14,12 @@ const CartReducer = (state , action) => {
                 updatedCartItem.quantity ++;
                 updatedCartItem.colors = action.color;
                 updatedCart[cartIndex] = updatedCartItem;
-            }     
-            return {...state , cart : updatedCart , total : state.total + Number(action.payload.price - action.payload.discount)};
+            }
+            const cartData = {...state , cart : updatedCart , total : state.total + Number(action.payload.price - action.payload.discount)}
+                
+            return cartData;
         }
+        
         default : return{state}
     }
 }
