@@ -21,8 +21,20 @@ const CartReducer = (state , action) => {
         }
         case 'REMOVE_CART' : {
             const filterCart = [...state.cart].filter(c => c._id !== action.payload._id);
-            console.log();
             return {...state , cart : filterCart  , total : state.total - (action.payload.price - action.payload.discount)}
+        }
+        case 'DECREMENT_CART' : {
+            const updatedCart = [...state.cart];
+            const cartIndex = updatedCart.findIndex(c => c._id === action.payload._id);
+            const updatedCartItem = {...updatedCart[cartIndex]};
+            if(updatedCartItem.quantity === 1){
+                const filterCart = [...state.cart].filter(c => c._id !== action.payload._id);
+                return {...state , cart : filterCart  , total : state.total - (action.payload.price - action.payload.discount)}
+            }else{
+                updatedCartItem.quantity --;
+                updatedCart[cartIndex] = updatedCartItem;
+                return({...state , cart : updatedCart , total : state.total - (action.payload.price - action.payload.discount)})
+            }
         }
         default : return{state}
     }

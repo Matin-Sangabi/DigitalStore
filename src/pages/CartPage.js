@@ -1,8 +1,10 @@
 import { Link } from "react-router-dom";
 import Layout from "../layout/layout";
 import { IoClose } from "react-icons/io5";
-import { HiMinusSm, HiPlusSm, HiOutlineTrash , HiOutlineArrowRight } from "react-icons/hi";
+import { HiMinusSm, HiPlusSm, HiOutlineTrash , HiOutlineArrowRight ,HiCheck } from "react-icons/hi";
 import { useCart, useCartAction } from "../provider/cartProvider";
+import {toast} from 'react-toastify';
+import { toastStyle } from "../utils/toastStyle";
 const CartPage = () => {
   const { cart } = useCart();
   const dispatch = useCartAction();
@@ -35,8 +37,19 @@ export default CartPage;
 
 const CartItems = ({ cart , dispatch }) => {
   const RemoveCart = (cart) =>{
+    toast.success(`${cart.name} Deleted` , toastStyle)
     dispatch({type : 'REMOVE_CART' , payload : cart});
+  }
+  const IncrementCart = (cart) =>{
+    dispatch({type: "ADD_TO_CART" , payload : cart , color : cart.colors});
   }  
+  const DecrementCart = (cart) =>{
+    if(cart.quantity === 1) {
+         toast.success(`${cart.name} Deleted` , toastStyle)
+
+    }
+    dispatch({type : "DECREMENT_CART" , payload : cart});
+  }
   return (
     <>
       {cart.map((item) => {
@@ -55,7 +68,10 @@ const CartItems = ({ cart , dispatch }) => {
             <div className="flex flex-col h-20 justify-between flex-1">
               <div className="flex flex-col">
                 <h1 className="font-semibold text-gray-800">{item.name}</h1>
-                <p className="text-sm text-gray-500">{item.model}</p>
+                <div className="flex gap-x-2 items-center">
+                    <p className="text-sm text-gray-500">{item.model}</p>
+                    <span className={`w-4 h-4 rounded-full ${item.colors.code} flex justify-center items-center text-slate-100 text-sm`}><HiCheck className="w-2"/></span>
+                </div>
               </div>
               <h1 className="font-bold text-cyan-900">{item.price}$</h1>
             </div>
@@ -67,15 +83,17 @@ const CartItems = ({ cart , dispatch }) => {
                 <button
                   type="button"
                   className="w-6 h-6 rounded-full text-gray-800 bg-transparent flex justify-center items-center border-2 border-cyan-900"
+                  onClick={() => IncrementCart(item)}
                 >
                   <HiPlusSm />
                 </button>
                 <span className="w-6 h-8  rounded-md border-2 border-gray-600 text-gray-800 font-semibold flex justify-center items-center">
-                  1
+                  {item.quantity}
                 </span>
                 <button
                   type="button"
                   className={`w-6 h-6 rounded-full  text-slate-100 flex justify-center items-center ${item.quantity === 1 ? "bg-rose-600" : "bg-cyan-900"}`}
+                  onClick={() => DecrementCart(item)}
                 >
                   {item.quantity === 1 ? <HiOutlineTrash/> : <HiMinusSm/>}
                 </button>
