@@ -2,13 +2,15 @@ import { Link, NavLink } from "react-router-dom";
 import { navigation } from "../../../utils/Navigation";
 import { RiSearch2Line, RiShoppingBag3Line } from "react-icons/ri";
 import { useEffect, useState } from "react";
+import { useCart } from "../../../provider/cartProvider";
 const TopNavigation = () => {
+  const {cart} = useCart();
   const [show, setShow] = useState(false);
   const [navbarColor , setNavbarColor] = useState(false);
   useEffect(()=>{
     const changeNavbarColor = () =>{
       const scroll = window.scrollY;
-      if(scroll >= 98) {
+      if(scroll >= 80) {
         setNavbarColor(true);
       }
       else{
@@ -74,7 +76,7 @@ const TopNavigation = () => {
             <Link to="/cart" className="text-xl">
               <RiShoppingBag3Line />
               <span className="w-3 h-4 flex items-center justify-center text-xs rounded-full bg-cyan-900 text-gray-300 absolute  bottom-3 left-3">
-                0
+                {cart.length}
               </span>
             </Link>
           </div>

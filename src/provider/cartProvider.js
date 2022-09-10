@@ -13,7 +13,7 @@ const  initialState = {
 function CartProvider ({children}){
     const [cart , dispatch] = useReducer(CartReducer , initialState);
    useEffect(()=>{
-    const data = JSON.parse(localStorage.getItem(AUTH_KEY_NAME)) || false;
+    const data = JSON.parse(localStorage.getItem(AUTH_KEY_NAME)) || initialState;
     dispatch({type : "storage" , payload : data})
    } , [])
    useEffect(()=>{

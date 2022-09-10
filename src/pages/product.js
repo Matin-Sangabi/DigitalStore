@@ -10,11 +10,13 @@ import {
   IoCheckmarkSharp,
 } from "react-icons/io5";
 import { TbTruckDelivery, TbAward } from "react-icons/tb";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import TopNavigation from "../components/Navigation/topNavigation/TopNavigation";
-import { useCartAction } from "../provider/cartProvider";
-
+import { useCart, useCartAction } from "../provider/cartProvider";
+import { toast } from "react-toastify";
 import { getOneProducts } from "../services/getOneProducts";
+import { CheckInCart } from "../utils/checkIncart";
+import { toastStyle } from "../utils/toastStyle";
 
 const Colors = [
   { id: 1, name: "gray", code: "bg-gray-500", isActive: false },
@@ -28,14 +30,19 @@ const ProductPage = () => {
   const [product, setProduct] = useState(false);
   const [ChooseColors, setChooseColor] = useState(false);
   const dispatch = useCartAction();
+  const { cart } = useCart();
   const location = useParams();
   const id = location.id;
   const cartProduct = (product, ChooseColors) => {
     if (ChooseColors) {
       // const productDis = { ...product, color: ChooseColors };
-      dispatch({ type: "ADD_TO_CART", payload: product , color : ChooseColors });
+      toast.success(`${product.name} Added To Cart` , toastStyle)
+      dispatch({ type: "ADD_TO_CART", payload: product, color: ChooseColors });
+    } else {
+      toast.error("please Choose Color", toastStyle);
     }
   };
+
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -67,13 +74,30 @@ const ProductPage = () => {
                 $
               </h1>
               <hr className="border-gray-500" />
-              <button
-                type="button"
-                className="p-4 bg-cyan-900 rounded-md text-slate-100 text-center font-bold"
-                onClick={() => cartProduct(product, ChooseColors)}
-              >
-                Add To cart{" "}
-              </button>
+              {!CheckInCart(cart, product) ? (
+                <button
+                  type="button"
+                  className="p-4 bg-cyan-900 rounded-md text-slate-100 text-center font-bold hover:ring hover:ring-offset-2 hover:ring-cyan-900 duration-500 transition-all ease-in-out"
+                  onClick={() => cartProduct(product, ChooseColors)}
+                >
+                  Add To cart{" "}
+                </button>
+              ) : (
+                <div className="flex flex-col gap-y-2">
+                  <button
+                    type="button"
+                    className="bg-transparent w-full ring-2 font-semibold ring-cyan-900 rounded-md text-cyan-900 p-2"
+                  >
+                    InCart
+                  </button>
+                  <Link
+                    to={"/cart"}
+                    className="p-2 bg-cyan-900 rounded-md text-slate-100  text-center font-semibold hover:ring hover:ring-offset-2 hover:ring-cyan-900 duration-500 transition-all ease-in-out"
+                  >
+                    See Cart Now ...
+                  </Link>
+                </div>
+              )}
             </div>
           </div>
         </section>
