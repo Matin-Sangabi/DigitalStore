@@ -19,7 +19,11 @@ const CartReducer = (state , action) => {
                 
             return cartData;
         }
-        
+        case 'REMOVE_CART' : {
+            const filterCart = [...state.cart].filter(c => c._id !== action.payload._id);
+            console.log();
+            return {...state , cart : filterCart  , total : state.total - (action.payload.price - action.payload.discount)}
+        }
         default : return{state}
     }
 }

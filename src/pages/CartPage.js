@@ -2,10 +2,10 @@ import { Link } from "react-router-dom";
 import Layout from "../layout/layout";
 import { IoClose } from "react-icons/io5";
 import { HiMinusSm, HiPlusSm, HiOutlineTrash , HiOutlineArrowRight } from "react-icons/hi";
-import { useCart } from "../provider/cartProvider";
+import { useCart, useCartAction } from "../provider/cartProvider";
 const CartPage = () => {
   const { cart } = useCart();
-
+  const dispatch = useCartAction();
   return (
     <Layout>
       {cart.length !== 0 && 
@@ -17,7 +17,7 @@ const CartPage = () => {
           </Link>
         </div>
         <div className="col-span-12 md:col-span-8 rounded-md p-2 flex flex-col gap-y-2">
-          <CartItems cart={cart} />
+          <CartItems cart={cart} dispatch={dispatch}/>
         </div>
         <div className="col-span-4">
           <CalculatePrice cart={cart} />
@@ -30,7 +30,13 @@ const CartPage = () => {
 
 export default CartPage;
 
-const CartItems = ({ cart }) => {
+
+
+
+const CartItems = ({ cart , dispatch }) => {
+  const RemoveCart = (cart) =>{
+    dispatch({type : 'REMOVE_CART' , payload : cart});
+  }  
   return (
     <>
       {cart.map((item) => {
@@ -54,7 +60,7 @@ const CartItems = ({ cart }) => {
               <h1 className="font-bold text-cyan-900">{item.price}$</h1>
             </div>
             <div className="flex flex-col h-24 justify-between items-end">
-              <button type="button" className="text-xl text-cyan-900">
+              <button type="button" className="text-xl text-cyan-900" onClick={() => RemoveCart(item)}>
                 <IoClose />
               </button>
               <div className="flex gap-x-2 items-center">
