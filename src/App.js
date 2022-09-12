@@ -9,6 +9,8 @@ import ProductPage from "./pages/product";
 import CartProvider from "./provider/cartProvider";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Login from "./pages/login";
+import Signup from "./pages/signup";
 const App = () => {
   return (
     <Fragment>
@@ -20,6 +22,8 @@ const App = () => {
             <Route path="/cart" element={<CartPage />} />
             <Route path="/products" element={<ProductsPage />} />
             <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signUp" element={<Signup/>} />
           </Routes>
         </CartProvider>
       </ProductsProvider>

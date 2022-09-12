@@ -91,7 +91,7 @@ const SortSection = ({ products, setFilterProducts }) => {
   };
   return (
     <div className="hidden md:block md:col-span-4 lg:col-span-3  row-span-2 sticky h-auto">
-      <div className="bg-gray-300 shadow-lg p-5 rounded-xl sticky top-[4.8rem] max-h-[calc(100vh-120px)] overflow-auto">
+      <div className="bg-gray-300 shadow-lg p-5 rounded-xl sticky top-[4.8rem] max-h-[calc(90vh-120px)] overflow-auto">
         {SortProducts.map((product, index) => {
           return (
             <div key={index}>
