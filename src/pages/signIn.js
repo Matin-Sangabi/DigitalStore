@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Layout from "../layout/layout";
 import { HiArrowSmRight } from "react-icons/hi";
 import { FcGoogle } from "react-icons/fc";
-const Signup = () => {
+const SignIn = () => {
   return (
     <Layout>
       <section className="pt-24 grid grid-cols-12 gap-8 md:mx-auto max-w-screen-xl">
@@ -29,7 +29,7 @@ const Signup = () => {
             <h1 className="mt-2 text-gray-500 font-semibold relative text-center lg:w-96 w-80 before:content-[''] before:block before:w-[5.5rem] before:lg:w-[7.3rem] before:h-[2px] before:bg-gradient-to-l before:from-gray-500 before:to-gray-300 before:absolute before:left-0 before:top-[55%] after:content-[''] after:block after:w-[5.5rem] after:lg:w-[7.3rem] after:h-[2px] after:bg-gradient-to-l after:from-gray-300 after:to-gray-500 after:absolute after:right-0 after:top-[55%]">
               or SignIn with Email
             </h1>
-            <form className="flex flex-col gap-y-3 w-80 lg:w-96 mt-8">
+            <form className="flex flex-col gap-y-3 w-80 lg:w-96 mt-4">
             <div className="w-full">
                 <input
                   type="text"
@@ -64,7 +64,7 @@ const Signup = () => {
                 className="mt-6 flex justify-center items-center bg-gradient-to-r from-[#0f2333] via-[#21455d] to-[#42a989] p-3  text-slate-200 text-center rounded-md hover:shadow-md hover:shadow-[#0f2333] group transition-all ease-in-out duration-500"
               >
                 <span className="font-semibold flex justify-center flex-auto text-center">
-                  SignUp
+                  Sign in
                 </span>
                 <span className="group-hover:translate-x-2/3 transition-all ease-in-out duration-500 text-xl">
                   <HiArrowSmRight />
@@ -85,4 +85,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignIn;

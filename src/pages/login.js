@@ -1,8 +1,43 @@
 import { Link } from "react-router-dom";
 import Layout from "../layout/layout";
+import { useFormik } from "formik";
+import * as yup from "yup";
 import { HiArrowSmRight } from "react-icons/hi";
 import { FcGoogle } from "react-icons/fc";
+import { useState } from "react";
+import { RiLoader5Fill, RiCheckboxCircleFill } from "react-icons/ri";
+const initialValues = {
+  email: "",
+  password: "",
+};
+
+const validationSchema = yup.object({
+  email: yup.string().email().required(),
+  password: yup
+    .string()
+    .required("No password provided.")
+    .min(8, "Password is too short - should be 8 chars minimum.")
+    .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
+});
+
+const onSubmit = (values) => {
+  console.log(values);
+};
+
 const Login = () => {
+  const [isType, setIsType] = useState(false);
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+    validationSchema,
+  });
+  const inputHandler = (e) => {
+    if (e.target.value.length !== 0) {
+      setIsType(true);
+    } else {
+      setIsType(false);
+    }
+  };
   return (
     <Layout>
       <section className="pt-24 grid grid-cols-12 gap-8 md:mx-auto max-w-screen-xl">
@@ -10,36 +45,98 @@ const Login = () => {
         <div className="col-span-12 md:col-span-6 lg:col-span-5 mb-32 ">
           <div className="flex flex-col gap-4 justify-center items-center mt-12 w-full h-fit ">
             <div className="w-10">
-              <img src={require("./../assets/images/Apple_logo.png")} className="max-w-full" alt="logo"/>
+              <img
+                src={require("./../assets/images/Apple_logo.png")}
+                className="max-w-full"
+                alt="logo"
+              />
             </div>
-            <h1 className="text-slate-900 font-semibold text-4xl lg:text-5xl tracking-widest">WellCome Back </h1>
+            <h1 className="text-slate-900 font-semibold text-4xl lg:text-5xl tracking-widest">
+              WellCome Back{" "}
+            </h1>
             <button className="w-80 lg:w-96 ring-1 ring-slate-900 p-2 font-semibold flex justify-between items-center mt-8 rounded-md bg-transparent hover:shadow-md hover:shadow-slate-900  transition-all ease-in-out duration-500 group">
-              <span className="text-xl"><FcGoogle/></span>
+              <span className="text-xl">
+                <FcGoogle />
+              </span>
               <span className="w-full text-center ">Login with Google</span>
             </button>
-            <h1 className="mt-2 text-gray-500 font-semibold relative text-center lg:w-96 w-80 before:content-[''] before:block before:w-[5.5rem] before:lg:w-[7.5rem] before:h-[2px] before:bg-gradient-to-l before:from-gray-500 before:to-gray-300 before:absolute before:left-0 before:top-[55%] after:content-[''] after:block after:w-[5.5rem] after:lg:w-[7.5rem] after:h-[2px] after:bg-gradient-to-l after:from-gray-300 after:to-gray-500 after:absolute after:right-0 after:top-[55%]">or Login with Email</h1>
-            <form className="flex flex-col gap-y-3 w-80 lg:w-96 mt-8">
+            <h1 className="mt-2 text-gray-500 font-semibold relative text-center lg:w-96 w-80 before:content-[''] before:block before:w-[5.5rem] before:lg:w-[7.5rem] before:h-[2px] before:bg-gradient-to-l before:from-gray-500 before:to-gray-300 before:absolute before:left-0 before:top-[55%] after:content-[''] after:block after:w-[5.5rem] after:lg:w-[7.5rem] after:h-[2px] after:bg-gradient-to-l after:from-gray-300 after:to-gray-500 after:absolute after:right-0 after:top-[55%]">
+              or Login with Email
+            </h1>
+            <form
+              onSubmit={formik.handleSubmit}
+              className="flex flex-col gap-y-3 w-80 lg:w-96 mt-8"
+            >
               <div className="w-full">
-                <input type="text"  className="p-2 w-full ring-1 bg-transparent focus:outline-none font-semibold ring-[#0f2333] rounded-md focus:ring-2 transition-all ease-in-out duration-300 focus:shadow-md focus:shadow-slate-900" placeholder="Your Email"/>
+                <input
+                  type="text"
+                  className="p-2 w-full ring-1 bg-transparent focus:outline-none font-semibold ring-[#0f2333] rounded-md focus:ring-2 transition-all ease-in-out duration-300 focus:shadow-md focus:shadow-slate-900"
+                  placeholder="Your Email"
+                  name="email"
+                  {...formik.getFieldProps("email")}
+                />
               </div>
-              <div className="w-full">
-                <input type="password"  className="p-2 w-full ring-1 bg-transparent focus:outline-none font-semibold  ring-[#0f2333] rounded-md focus:ring-2 transition-all ease-in-out duration-300 focus:shadow-md focus:shadow-slate-900" placeholder="Your Password"/>
+              <div className="w-full relative">
+                <input
+                  type="password"
+                  className={`p-2 w-full ring-2 bg-transparent focus:outline-none font-semibold  ring-[#0f2333] rounded-md focus:ring-2 transition-all ease-in-out duration-300 focus:shadow-md focus:shadow-slate-900 ${
+                    formik.errors.password && "ring-2 ring-rose-700"
+                  } ${formik.touched.password && 'animate-pulse'} 
+                  ${
+                    !formik.errors.password &&
+                    formik.touched.password &&
+                    "ring-green-800 animate-none"
+                  } `}
+                  placeholder="Your Password"
+                  name="password"
+                  {...formik.getFieldProps("password")}
+                  onInput={inputHandler}
+                />
+                {isType && (
+                  <span className="absolute top-3 right-2">
+                    {formik.errors.password ? (
+                      <RiLoader5Fill className="animate-spin" />
+                    ) : (
+                      <RiCheckboxCircleFill className="text-green-800" />
+                    )}
+                  </span>
+                )}
+                {formik.errors && formik.touched && (
+                  <span className="text-sm text-rose-700 px-2">
+                    {formik.errors.password}
+                  </span>
+                )}
               </div>
               <div className="w-full flex justify-between items-center mt-2 px-2 text-slate-900 text-sm">
                 <div className="flex items-center gap-x-2 ">
-                  <input type="checkbox"/>
+                  <input type="checkbox" />
                   <p>Keep Me LoggedIn</p>
                 </div>
                 <div>
-                  <Link to={"/"} className="underline ">Forgot Password ?</Link>
+                  <Link to={"/"} className="underline ">
+                    Forgot Password ?
+                  </Link>
                 </div>
               </div>
-              <button type="submit" className="mt-6 flex justify-center items-center bg-gradient-to-r from-[#0f2333] via-[#21455d] to-[#42a989] p-3  text-slate-200 text-center rounded-md hover:shadow-md hover:shadow-[#0f2333] group transition-all ease-in-out duration-500">
-                <span className="font-semibold flex justify-center flex-auto text-center">Login</span>
-                <span className="group-hover:translate-x-2/3 transition-all ease-in-out duration-500 text-xl"><HiArrowSmRight/></span>
+              <button
+                type="submit"
+                className="mt-6 flex justify-center items-center bg-gradient-to-r from-[#0f2333] via-[#21455d] to-[#42a989] p-3  text-slate-200 text-center rounded-md hover:shadow-md hover:shadow-[#0f2333] group transition-all ease-in-out duration-500"
+              >
+                <span className="font-semibold flex justify-center flex-auto text-center">
+                  Login
+                </span>
+                <span className="group-hover:translate-x-2/3 transition-all ease-in-out duration-500 text-xl">
+                  <HiArrowSmRight />
+                </span>
               </button>
             </form>
-            <Link to={"/signUp"} className="text-gray-600 mt-8 font-semibold flex gap-x-2 items-center tracking-wide">Don't have an Account Yet? <span className="underline text-slate-800">SignUp</span></Link>
+            <Link
+              to={"/signIn"}
+              className="text-gray-600 mt-8 font-semibold flex gap-x-2 items-center tracking-wide"
+            >
+              Don't have an Account Yet?{" "}
+              <span className="underline text-slate-800">SignUp</span>
+            </Link>
           </div>
         </div>
       </section>
