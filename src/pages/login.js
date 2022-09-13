@@ -4,8 +4,13 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import { HiArrowSmRight } from "react-icons/hi";
 import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
-import { RiLoader5Fill, RiCheckboxCircleFill } from "react-icons/ri";
+import Inputs from "../components/forms/input";
+
+const LoginInputs = [
+  {name : 'email' },{name : "password" , type:"password"}
+]
+
+
 const initialValues = {
   email: "",
   password: "",
@@ -25,19 +30,13 @@ const onSubmit = (values) => {
 };
 
 const Login = () => {
-  const [isType, setIsType] = useState(false);
+  
   const formik = useFormik({
     initialValues,
     onSubmit,
     validationSchema,
   });
-  const inputHandler = (e) => {
-    if (e.target.value.length !== 0) {
-      setIsType(true);
-    } else {
-      setIsType(false);
-    }
-  };
+ 
   return (
     <Layout>
       <section className="pt-24 grid grid-cols-12 gap-8 md:mx-auto max-w-screen-xl">
@@ -67,46 +66,11 @@ const Login = () => {
               onSubmit={formik.handleSubmit}
               className="flex flex-col gap-y-3 w-80 lg:w-96 mt-8"
             >
-              <div className="w-full">
-                <input
-                  type="text"
-                  className="p-2 w-full ring-1 bg-transparent focus:outline-none font-semibold ring-[#0f2333] rounded-md focus:ring-2 transition-all ease-in-out duration-300 focus:shadow-md focus:shadow-slate-900"
-                  placeholder="Your Email"
-                  name="email"
-                  {...formik.getFieldProps("email")}
-                />
-              </div>
-              <div className="w-full relative">
-                <input
-                  type="password"
-                  className={`p-2 w-full ring-2 bg-transparent focus:outline-none font-semibold  ring-[#0f2333] rounded-md focus:ring-2 transition-all ease-in-out duration-300 focus:shadow-md focus:shadow-slate-900 ${
-                    formik.errors.password && "ring-2 ring-rose-700"
-                  } ${formik.touched.password && 'animate-pulse'} 
-                  ${
-                    !formik.errors.password &&
-                    formik.touched.password &&
-                    "ring-green-800 animate-none"
-                  } `}
-                  placeholder="Your Password"
-                  name="password"
-                  {...formik.getFieldProps("password")}
-                  onInput={inputHandler}
-                />
-                {isType && (
-                  <span className="absolute top-3 right-2">
-                    {formik.errors.password ? (
-                      <RiLoader5Fill className="animate-spin" />
-                    ) : (
-                      <RiCheckboxCircleFill className="text-green-800" />
-                    )}
-                  </span>
-                )}
-                {formik.errors && formik.touched && (
-                  <span className="text-sm text-rose-700 px-2">
-                    {formik.errors.password}
-                  </span>
-                )}
-              </div>
+              {LoginInputs.map((item , index)=>{
+                return(
+                  <Inputs formik={formik} {...item} key={index}/>
+                )
+              })}
               <div className="w-full flex justify-between items-center mt-2 px-2 text-slate-900 text-sm">
                 <div className="flex items-center gap-x-2 ">
                   <input type="checkbox" />

@@ -1,9 +1,51 @@
-
 import { Link } from "react-router-dom";
 import Layout from "../layout/layout";
 import { HiArrowSmRight } from "react-icons/hi";
 import { FcGoogle } from "react-icons/fc";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import Inputs from "../components/forms/input";
+
+const SignInInputs = [
+  { name: "name" },
+  { name: "email" },
+  { name: "phoneNumber", type: "phone" },
+  { name: "password", type: "password" },
+];
+
+const initialValues = {
+  name: "",
+  email: "",
+  phoneNumber: "",
+  password: "",
+};
+const phoneRegExp =
+  /^((\\+[1-9]{1,4}[ \\-]*)|(\\([0-9]{2,3}\\)[ \\-]*)|([0-9]{2,4})[ \\-]*)*?[0-9]{3,4}?[ \\-]*[0-9]{3,4}?$/;
+const validationSchema = yup.object({
+  name: yup
+    .string()
+    .matches(/^[A-Za-z ]*$/, "Please enter valid name")
+    .min(5)
+    .max(20)
+    .required(),
+  email: yup.string().email().required(),
+  phoneNumber: yup.string().matches(phoneRegExp, "Phone number is not valid").required(),
+  password: yup
+    .string()
+    .required("No password provided.")
+    .min(8, "Password is too short - should be 8 chars minimum.")
+    .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
+});
+
+const onSubmit = (values) => {
+  console.log(values);
+};
 const SignIn = () => {
+  const formik = useFormik({
+    initialValues,
+    onSubmit,
+    validationSchema,
+  });
   return (
     <Layout>
       <section className="pt-24 grid grid-cols-12 gap-8 md:mx-auto max-w-screen-xl">
@@ -29,36 +71,13 @@ const SignIn = () => {
             <h1 className="mt-2 text-gray-500 font-semibold relative text-center lg:w-96 w-80 before:content-[''] before:block before:w-[5.5rem] before:lg:w-[7.3rem] before:h-[2px] before:bg-gradient-to-l before:from-gray-500 before:to-gray-300 before:absolute before:left-0 before:top-[55%] after:content-[''] after:block after:w-[5.5rem] after:lg:w-[7.3rem] after:h-[2px] after:bg-gradient-to-l after:from-gray-300 after:to-gray-500 after:absolute after:right-0 after:top-[55%]">
               or SignIn with Email
             </h1>
-            <form className="flex flex-col gap-y-3 w-80 lg:w-96 mt-4">
-            <div className="w-full">
-                <input
-                  type="text"
-                  className="p-2 w-full ring-1 bg-transparent focus:outline-none font-semibold ring-[#0f2333] rounded-md focus:ring-2 transition-all ease-in-out duration-300 focus:shadow-md focus:shadow-slate-900"
-                  placeholder="Your Name"
-                />
-              </div>
-              <div className="w-full">
-                <input
-                  type="text"
-                  className="p-2 w-full ring-1 bg-transparent focus:outline-none font-semibold ring-[#0f2333] rounded-md focus:ring-2 transition-all ease-in-out duration-300 focus:shadow-md focus:shadow-slate-900"
-                  placeholder="Your Email"
-                />
-              </div>
-              <div className="w-full">
-                <input
-                  type="text"
-                  className="p-2 w-full ring-1 bg-transparent focus:outline-none font-semibold ring-[#0f2333] rounded-md focus:ring-2 transition-all ease-in-out duration-300 focus:shadow-md focus:shadow-slate-900"
-                  placeholder="Your Number"
-                />
-              </div>
-              <div className="w-full">
-                <input
-                  type="password"
-                  className="p-2 w-full ring-1 bg-transparent focus:outline-none font-semibold  ring-[#0f2333] rounded-md focus:ring-2 transition-all ease-in-out duration-300 focus:shadow-md focus:shadow-slate-900"
-                  placeholder="Your Password"
-                />
-              </div>
-              
+            <form
+              onSubmit={formik.handleSubmit}
+              className="flex flex-col gap-y-3 w-80 lg:w-96 mt-4"
+            >
+              {SignInInputs.map((item, index) => {
+                return <Inputs formik={formik} {...item} key={index} />;
+              })}
               <button
                 type="submit"
                 className="mt-6 flex justify-center items-center bg-gradient-to-r from-[#0f2333] via-[#21455d] to-[#42a989] p-3  text-slate-200 text-center rounded-md hover:shadow-md hover:shadow-[#0f2333] group transition-all ease-in-out duration-500"
