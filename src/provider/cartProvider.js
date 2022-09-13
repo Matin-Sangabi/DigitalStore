@@ -3,7 +3,7 @@ import CartReducer from "./cartReducer";
 const Context = createContext();
 const ContextDispatcher = createContext();
 
-const AUTH_KEY_NAME = "cart";
+const CART_KEY_NAME = "cart";
 
 const  initialState = {
     cart : [],
@@ -13,11 +13,11 @@ const  initialState = {
 function CartProvider ({children}){
     const [cart , dispatch] = useReducer(CartReducer , initialState);
    useEffect(()=>{
-    const data = JSON.parse(localStorage.getItem(AUTH_KEY_NAME)) || initialState;
+    const data = JSON.parse(localStorage.getItem(CART_KEY_NAME)) || initialState;
     dispatch({type : "storage" , payload : data})
    } , [])
    useEffect(()=>{
-    localStorage.setItem(AUTH_KEY_NAME , JSON.stringify(cart))
+    localStorage.setItem(CART_KEY_NAME , JSON.stringify(cart))
    } , [cart])
     return(
         <Context.Provider value={cart}>
