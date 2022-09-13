@@ -5,6 +5,9 @@ import { FcGoogle } from "react-icons/fc";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Inputs from "../components/forms/input";
+import { useState } from "react";
+import { SignInUsers } from "../services/SignInUsers";
+import { useAuthAction } from "../provider/AuthProvider";
 
 const SignInInputs = [
   { name: "name" },
@@ -37,15 +40,29 @@ const validationSchema = yup.object({
     .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
 });
 
-const onSubmit = (values) => {
-  console.log(values);
-};
+
 const SignIn = () => {
+  const [error , setError] = useState(null);
+  const setAuth = useAuthAction();
+  const onSubmit = async (values) => {
+    try{
+      const {data} = await SignInUsers(values);
+      setError(null);
+      setAuth(data);
+    }
+    catch(err){
+      if(err.response && err.response.data.message){
+        setError(err.response.data.message);
+      }
+    }
+  };
+  console.log(error)
   const formik = useFormik({
     initialValues,
     onSubmit,
     validationSchema,
   });
+  
   return (
     <Layout>
       <section className="pt-24 grid grid-cols-12 gap-8 md:mx-auto max-w-screen-xl">

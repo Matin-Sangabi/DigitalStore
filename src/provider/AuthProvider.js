@@ -16,9 +16,9 @@ const AuthProvider = ({children}) => {
     } , [Auth])
     return ( 
         <AuthContext.Provider value={Auth}>
-            <AuthContextDispatcher value={setAuth}>
+            <AuthContextDispatcher.Provider value={setAuth}>
                 {children}
-            </AuthContextDispatcher>
+            </AuthContextDispatcher.Provider>
         </AuthContext.Provider>
      );
 }
@@ -26,5 +26,5 @@ const AuthProvider = ({children}) => {
 
 export default AuthProvider;
 
-const useAuth = () => useContext(AuthContext);
-const useAuthAction = useContext(AuthContextDispatcher);
+export const useAuth = () => useContext(AuthContext);
+export const useAuthAction = () => useContext(AuthContextDispatcher);

@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link , useNavigate, useSearchParams } from "react-router-dom";
 import Layout from "../layout/layout";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import { HiArrowSmRight } from "react-icons/hi";
 import { FcGoogle } from "react-icons/fc";
 import Inputs from "../components/forms/input";
+import { useState } from "react";
+import { useAuthAction } from "../provider/AuthProvider";
+import LoginUsers from "../services/LoginUsers";
 
 const LoginInputs = [
   {name : 'email' },{name : "password" , type:"password"}
@@ -25,12 +28,28 @@ const validationSchema = yup.object({
     .matches(/[a-zA-Z]/, "Password can only contain Latin letters."),
 });
 
-const onSubmit = (values) => {
-  console.log(values);
-};
+
 
 const Login = () => {
-  
+  const [error , setError] = useState(null);
+  const setAuth = useAuthAction();
+  const navigate = useNavigate();
+  const [searchParameter] = useSearchParams();
+  const redirect = searchParameter.get('redirect') || "npm profile";
+  const onSubmit = async (values) => {
+    try{
+      const {data} = await LoginUsers(values);
+      setError(null)
+      setAuth(data); 
+      navigate(`/${redirect}`);
+    }
+    catch(err){
+      if(err.response && err.response.data.message){
+        setError(err.response.data.message);
+      }
+    }
+  };
+  console.log(error)
   const formik = useFormik({
     initialValues,
     onSubmit,

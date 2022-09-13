@@ -5,6 +5,7 @@ import { HiMinusSm, HiPlusSm, HiOutlineTrash , HiOutlineArrowRight ,HiCheck } fr
 import { useCart, useCartAction } from "../provider/cartProvider";
 import {toast} from 'react-toastify';
 import { toastStyle } from "../utils/toastStyle";
+import { useAuth } from "../provider/AuthProvider";
 const CartPage = () => {
   const { cart } = useCart();
   const dispatch = useCartAction();
@@ -107,6 +108,7 @@ const CartItems = ({ cart , dispatch }) => {
 };
 
 const CalculatePrice = ({cart}) => {
+    const Auth = useAuth();
     const originalPrice = cart.reduce((acc , curr) => acc + curr.quantity * curr.price , 0);
     const discountPrice = cart.reduce((acc , curr) => acc + curr.quantity * curr.discount , 0);
   return (
@@ -127,7 +129,7 @@ const CalculatePrice = ({cart}) => {
       </div>
       <div className="flex flex-col gap-4">
         <Link
-          to={"/context"}
+          to={Auth ? '/checkout' : "/login?redirect=checkout"}
           className="p-3 text-center bg-cyan-900 rounded-md text-slate-100 hover:ring hover:ring-offset-2 hover:ring-cyan-900 transition-all ease-in-out duration-500 flex justify-around items-center group"
         >
           <span>Continue the purchase</span>

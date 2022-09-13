@@ -1,10 +1,11 @@
 import { NavLink} from "react-router-dom";
-import { navigation } from "../../../utils/Navigation";
+import  Navigation  from "../../../utils/Navigation";
+
 const BottomNav = () => {
   return (
     <nav className="fixed bottom-0 left-0 bg-gray-400 shadow-sm rounded-t-[50%] z-100  w-full p-6 md:hidden   flex justify-center items-center">
       <ul className="flex items-center w-full justify-between">
-        {navigation.map((nav, index) => {
+        {Navigation().map((nav, index) => {
           return (
             <li key={index} className="flex flex-col">
               <NavLink

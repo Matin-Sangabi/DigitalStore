@@ -11,22 +11,25 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Login from "./pages/login";
 import SignIn from "./pages/signIn";
+import AuthProvider from "./provider/AuthProvider";
 
 const App = () => {
   return (
     <Fragment>
       <ProductsProvider>
-        <CartProvider>
-          <ToastContainer />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/products" element={<ProductsPage />} />
-            <Route path="/product/:id" element={<ProductPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signIn" element={<SignIn />} />
-          </Routes>
-        </CartProvider>
+        <AuthProvider>
+          <CartProvider>
+            <ToastContainer />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/products" element={<ProductsPage />} />
+              <Route path="/product/:id" element={<ProductPage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signIn" element={<SignIn />} />
+            </Routes>
+          </CartProvider>
+        </AuthProvider>
       </ProductsProvider>
     </Fragment>
   );

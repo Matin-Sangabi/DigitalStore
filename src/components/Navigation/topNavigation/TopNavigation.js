@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import { navigation } from "../../../utils/Navigation";
+import  Navigation  from "../../../utils/Navigation";
 import { RiSearch2Line, RiShoppingBag3Line } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import { useCart } from "../../../provider/cartProvider";
@@ -33,7 +33,7 @@ const TopNavigation = () => {
           </Link>
         </div>
         <ul className="flex items-center gap-x-6 ml-6">
-          {navigation.map((nav, index) => {
+          {Navigation().map((nav, index) => {
             return (
               <li key={index}>
                 <NavLink
