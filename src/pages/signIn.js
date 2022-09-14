@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import Layout from "../layout/layout";
 import { HiArrowSmRight } from "react-icons/hi";
 import { FcGoogle } from "react-icons/fc";
@@ -7,7 +7,7 @@ import * as yup from "yup";
 import Inputs from "../components/forms/input";
 import { useState } from "react";
 import { SignInUsers } from "../services/SignInUsers";
-import { useAuthAction } from "../provider/AuthProvider";
+import { useAuth, useAuthAction } from "../provider/AuthProvider";
 
 const SignInInputs = [
   { name: "name" },
@@ -43,12 +43,17 @@ const validationSchema = yup.object({
 
 const SignIn = () => {
   const [error , setError] = useState(null);
+  const Auth = useAuth();
+  const navigate = useNavigate();
+  const [searchParameter] = useSearchParams();
+  const redirect = searchParameter.get('redirect') || "profile";
   const setAuth = useAuthAction();
   const onSubmit = async (values) => {
     try{
       const {data} = await SignInUsers(values);
       setError(null);
       setAuth(data);
+      navigate(`/${redirect}`);
     }
     catch(err){
       if(err.response && err.response.data.message){
@@ -68,7 +73,7 @@ const SignIn = () => {
       <section className="pt-24 grid grid-cols-12 gap-8 md:mx-auto max-w-screen-xl">
         <div className="md:col-span-6  lg:col-span-7 w-full bg-hero-pattern bg-center bg-no-repeat bg-cover h-[85vh] rounded-md  hidden md:flex  justify-start items-center"></div>
         <div className="col-span-12 md:col-span-6 lg:col-span-5 mb-32 ">
-          <div className="flex flex-col gap-4 justify-center items-center mt-12 w-full h-fit ">
+          {!Auth ? <div className="flex flex-col gap-4 justify-center items-center mt-12 w-full h-fit ">
             <div className="w-10">
               <img
                 src={require("./../assets/images/Apple_logo.png")}
@@ -108,13 +113,26 @@ const SignIn = () => {
               </button>
             </form>
             <Link
-              to={"/login"}
+              to={redirect === "checkout" ? '/login?redirect=checkout' : "/login"}
               className="text-gray-600 mt-8 font-semibold flex gap-x-2 items-center tracking-wide"
             >
               Have An Account?{" "}
               <span className="underline text-slate-800">Login</span>
             </Link>
-          </div>
+          </div> : (
+            <div className="flex flex-col gap-y-4">
+              <h1 className="font-bold text-slate-800 text-3xl">
+                Hello {Auth.name}
+              </h1>
+              <h1 className="Font-bold ">Your Login To Apple Store</h1>
+              <Link
+                to={"/"}
+                className="p-2 bg-cyan-900 text-slate-200 rounded-md w-1/2 hover:ring hover:ring-offset-2 hover:ring-cyan-900 transition-all ease-in-out duration-500"
+              >
+                Go To Home Page Now
+              </Link>
+            </div>
+          )}
         </div>
       </section>
     </Layout>

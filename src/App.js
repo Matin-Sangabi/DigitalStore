@@ -12,14 +12,15 @@ import "react-toastify/dist/ReactToastify.css";
 import Login from "./pages/login";
 import SignIn from "./pages/signIn";
 import AuthProvider from "./provider/AuthProvider";
+import Profile from "./pages/profile";
 
 const App = () => {
   return (
     <Fragment>
-      <ProductsProvider>
-        <AuthProvider>
+      <AuthProvider>
+        <ProductsProvider>
+          <ToastContainer/>
           <CartProvider>
-            <ToastContainer />
             <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/cart" element={<CartPage />} />
@@ -27,10 +28,11 @@ const App = () => {
               <Route path="/product/:id" element={<ProductPage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signIn" element={<SignIn />} />
+              <Route path="/profile" element={<Profile />} />
             </Routes>
           </CartProvider>
-        </AuthProvider>
-      </ProductsProvider>
+        </ProductsProvider>
+      </AuthProvider>
     </Fragment>
   );
 };
