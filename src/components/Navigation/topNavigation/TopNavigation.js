@@ -3,9 +3,10 @@ import  Navigation  from "../../../utils/Navigation";
 import { RiSearch2Line, RiShoppingBag3Line } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import { useCart } from "../../../provider/cartProvider";
-const TopNavigation = () => {
+import SearchProducts from "../../searchProducts/searchProducts";
+const TopNavigation = ({show , setShow}) => {
   const {cart} = useCart();
-  const [show, setShow] = useState(false);
+  
   const [navbarColor , setNavbarColor] = useState(false);
   useEffect(()=>{
     const changeNavbarColor = () =>{
@@ -32,7 +33,7 @@ const TopNavigation = () => {
             />
           </Link>
         </div>
-        <ul className="flex items-center gap-x-6 ml-6">
+        <ul className="flex items-center gap-x-6 ">
           {Navigation().map((nav, index) => {
             return (
               <li key={index}>
@@ -50,27 +51,18 @@ const TopNavigation = () => {
             );
           })}
         </ul>
-        <div className="flex items-center justify-center gap-x-6">
-          <div className={show ? "flex items-center justify-center relative w-full" : "flex items-center justify-center relative w-5"}>
+        <div className="flex items-center justify-end gap-x-6 w-0 transition-all ease-in-out duration-500">
+          <div className={"flex items-center justify-center relative transition-all ease-in-out duration-300"}>
             <span
               onClick={() => setShow(!show)}
               className={
-                show
-                  ? "text-xl absolute left-2 cursor-pointer z-20 transition-all ease-linear duration-300 "
-                  : "text-xl absolute right-2 cursor-pointer transition-all ease-linear duration-300"
+                `text-xl absolute right-0 transition-all ease-in-out duration-500 cursor-pointer ${show ? '-translate-x-[12.5rem] z-10' : 'translate-x-0' }`
               }
             >
               <RiSearch2Line />
             </span>
-            <input
-              type="text"
-              placeholder="search"
-              className={
-                show
-                  ? "translate-y-0 z-10  transition-all duration-300 ease-linear py-2 px-8 w-56 rounded-md bg-gray-200 text-gray-600 border-none outline-none focus:ring-2 focus:shadow-md focus:shadow-cyan-900 focus:ring-cyan-900 "
-                  : "-translate-y-96 "
-              }
-            />
+            {<SearchProducts show={show}/>}
+            
           </div>
           <div className="flex items-center justify-center relative">
             <Link to="/cart" className="text-xl">

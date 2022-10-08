@@ -29,6 +29,7 @@ const Colors = [
 const ProductPage = () => {
   const [product, setProduct] = useState(false);
   const [ChooseColors, setChooseColor] = useState(false);
+  const [show, setShow] = useState(false);
   const dispatch = useCartAction();
   const { cart } = useCart();
   const location = useParams();
@@ -57,9 +58,9 @@ const ProductPage = () => {
 
   return (
     <>
-      <TopNavigation />
+      <TopNavigation  show={show} setShow={setShow}/>
       {product && (
-        <section className="w-full grid grid-cols-12 pt-28 max-w-screen-xl mx-auto px-4 xl:px-0 ">
+        <section onClick={() => setShow(false)} className="w-full grid grid-cols-12 pt-28 max-w-screen-xl mx-auto px-4 xl:px-0 ">
           <div className="col-span-12  lg:col-span-8">
             <ProductDetail product={product} setChooseColor={setChooseColor} />
           </div>
@@ -100,6 +101,7 @@ const ProductPage = () => {
               )}
             </div>
           </div>
+          <MObileCalculator product={product}/>
         </section>
       )}
     </>
@@ -295,6 +297,18 @@ const ProductDetail = ({ product, setChooseColor }) => {
   );
 };
 
-/**
- *
- */
+const MObileCalculator = ({product}) =>{
+  return(
+    <div className="fixed bottom-2 px-4 flex justify-center col-span-12 w-full md:hidden mx-auto left-0">
+      <div className="bg-gray-500 mx-auto rounded-md w-full shadow-xl flex items-center justify-between px-4">
+        <div className="flex flex-col ">
+          <h1>TotalPrice :</h1>
+          <p>1000$</p>
+        </div>
+        <div>
+          <button type="button" className="p-2 bg-cyan-900">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+  )
+}

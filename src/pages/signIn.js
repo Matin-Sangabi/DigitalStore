@@ -8,6 +8,8 @@ import Inputs from "../components/forms/input";
 import { useState } from "react";
 import { SignInUsers } from "../services/SignInUsers";
 import { useAuth, useAuthAction } from "../provider/AuthProvider";
+import {toast} from 'react-toastify';
+
 
 const SignInInputs = [
   { name: "name" },
@@ -54,14 +56,15 @@ const SignIn = () => {
       setError(null);
       setAuth(data);
       navigate(`/${redirect}`);
+      toast.success(`wellcome ${data.name}`)
     }
     catch(err){
       if(err.response && err.response.data.message){
         setError(err.response.data.message);
+        toast.error(error)
       }
     }
   };
-  console.log(error)
   const formik = useFormik({
     initialValues,
     onSubmit,

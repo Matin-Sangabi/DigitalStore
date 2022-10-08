@@ -8,7 +8,7 @@ import Inputs from "../components/forms/input";
 import {  useState } from "react";
 import { useAuth, useAuthAction } from "../provider/AuthProvider";
 import LoginUsers from "../services/LoginUsers";
-
+import {toast} from 'react-toastify'; 
 const LoginInputs = [{ name: "email" }, { name: "password", type: "password" }];
 
 const initialValues = {
@@ -38,13 +38,15 @@ const Login = () => {
       setError(null);
       setAuth(data);
       navigate(`/${redirect}`);
+      toast.success(`wellcome ${data.name}`)
     } catch (err) {
       if (err.response && err.response.data.message) {
         setError(err.response.data.message);
+        toast.error(error);
       }
     }
   };
-  console.log(error);
+
   const formik = useFormik({
     initialValues,
     onSubmit,
@@ -84,6 +86,7 @@ const Login = () => {
                 {LoginInputs.map((item, index) => {
                   return <Inputs formik={formik} {...item} key={index} />;
                 })}
+                {error && <p className="text-rose-500 animate-pulses">{error}</p>}
                 <div className="w-full flex justify-between items-center mt-2 px-2 text-slate-900 text-sm">
                   <div className="flex items-center gap-x-2 ">
                     <input type="checkbox" />
