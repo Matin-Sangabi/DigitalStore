@@ -4,6 +4,7 @@ import { RiSearch2Line, RiShoppingBag3Line } from "react-icons/ri";
 import { useEffect, useState } from "react";
 import { useCart } from "../../../provider/cartProvider";
 import SearchProducts from "../../searchProducts/searchProducts";
+import LogoIcon from "../../../utils/Logo";
 const TopNavigation = ({show , setShow}) => {
   const {cart} = useCart();
   
@@ -25,13 +26,7 @@ const TopNavigation = ({show , setShow}) => {
     <nav className={navbarColor ? "w-full p-4 hidden md:block fixed bg-gray-300 z-50 top-0 left-0 transition-all ease-in-out duration-300 shadow-md bg-opacity-80" : "w-full  p-6 hidden md:block fixed top-0 left-0 bg-transparent z-50 transition-all ease-in-out duration-300"}>
       <div className="max-w-screen-xl w-full mx-auto flex items-center justify-between">
         <div className="flex flex-col items-center justify-center">
-          <Link to="/">
-            <img
-              src={require("./../../../assets/images/Apple Logo PNG Vector (AI) Free Download.png")}
-              className="w-10 h-10 object-cover block"
-              alt="logo"
-            />
-          </Link>
+          <LogoIcon/>
         </div>
         <ul className="flex items-center gap-x-6 ">
           {Navigation().map((nav, index) => {

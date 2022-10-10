@@ -1,18 +1,22 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useProducts } from "../../provider/productsProvider";
 import { Link } from "react-router-dom";
+import { searchProducts } from "../../utils/searchProducts";
 const SearchProducts = ({ show }) => {
   const [input, setInput] = useState("");
   const [filterPRoducts, setFilterProducts] = useState([]);
   const products = useProducts();
+  useEffect(()=>{
+    if(!show){
+      setInput("");
+    }
+  } , [show])
+  
   const changeHandler = (e) => {
     setInput(e.target.value);
-    const filter = products.filter((p) =>
-      p.name.toLowerCase().includes(e.target.value.toLowerCase())
-    );
+    const filter = searchProducts(products , e);
     setFilterProducts(filter);
   };
-
   return (
     <div>
       <input
@@ -29,10 +33,10 @@ const SearchProducts = ({ show }) => {
 
         {show && (
           <div
-        className={`flex flex-col gap-y-2 max-h-96 overflow-auto bg-gray-200 shadow-md  rounded-md p-2 absolute w-full mt-2 transition-opacity ease-in-out duration-500 ${
+        className={`flex flex-col gap-y-2 max-h-96 overflow-auto bg-gray-200 shadow-md  rounded-md p-2 absolute w-full mt-2  ${
           input.length !== 0
-            ? "opacity-100 translate-x-0"
-            : "opacity-0 translate-x-96"
+            ? "opacity-100 translate-x-0 transition-opacity ease-in-out duration-500"
+            : "opacity-0 translate-x-full"
         }`}>
             {filterPRoducts.length !== 0 ? (
               filterPRoducts.map((item) => {
@@ -40,7 +44,7 @@ const SearchProducts = ({ show }) => {
                   <Link
                     to={`/product/${item._id}`}
                     key={item._id}
-                    className="flex gap-x-2 hover:bg-gray-500  hover:text-slate-100 hover:rounded-md group boredr-0 border-b-2 border-gray-400 transition-all ease-in-out duration-300"
+                    className="flex gap-x-2 hover:bg-gray-500  hover:text-slate-100 hover:rounded-md group border-0 border-b-2 border-gray-400 transition-all ease-in-out duration-300"
                   >
                     <div className="w-16 p-1">
                       <img
