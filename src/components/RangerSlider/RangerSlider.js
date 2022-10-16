@@ -8,12 +8,12 @@ const RangeSlider = ({ changeHandler}) => {
     return ( 
         <InputRange
           
-          maxValue={1210}
-          minValue={0}
+          maxValue={1200}
+          minValue={1}
           value={{...value}}
-          onChange={value => {
+          onChange={(value) => {
             setValue({...value})}}
-          onChangeComplete={value =>  changeHandler(value)}
+          onChangeComplete={value => changeHandler(value)}
         />
      );
 }

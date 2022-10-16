@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect , useRef } from "react";
 import LogoIcon from "../../utils/Logo";
 import {
   RiSearch2Line,
@@ -26,7 +26,8 @@ const MobileNav = () => {
   const [showCat, setShowCat] = useState(true);
   const [filterProducts , setFilterProducts] = useState([]);
   const products = useProducts();
-  
+  const inputRef = useRef(null);
+  useEffect(()=>{show && inputRef.current.focus() }, [show])
   useEffect(() => {
     const updateWindowSize = () => {
       setWindowSize(window.innerWidth);
@@ -46,7 +47,6 @@ const MobileNav = () => {
     setFilterProducts(filter)
   };
 
-  console.log(filterProducts)
   return (
     <section className="w-full max-w-screen-xl px-4 pt-4 flex md:hidden justify-between items-center">
       <div>
@@ -57,7 +57,7 @@ const MobileNav = () => {
           <button
             type="button"
             onClick={() => setShow(!show)}
-            className={`text-2xl text-gray-700 ${show ? "hidden" : "block"}`}
+            className={`text-xl text-gray-700 ${show ? "hidden" : "block"}`}
           >
             <RiSearch2Line />
           </button>
@@ -67,11 +67,11 @@ const MobileNav = () => {
             show ? "translate-x-0" : "translate-x-full"
           }`}
         >
-          <div className="w-full flex items-center gap-2">
+          <div className="w-full flex items-center gap-2 relative">
             <button
               type="button"
               onClick={() => setShow(false)}
-              className="text-xl text-cyan-900"
+              className={`text-xl text-cyan-900 transition-all ease-in-out duration-200 ${show ? "rotate-0" : "rotate-180"}`}
             >
               <RiArrowLeftLine />
             </button>
@@ -83,7 +83,8 @@ const MobileNav = () => {
               value={inputSearch}
               onChange={searchHandler}
               placeholder="search"
-              className="bg-transparent w-full outline-none border-0 border-cyan-900 text-cyan-900 font-semibold border-b-2 p-2 placeholder:text-cyan-900"
+              ref={inputRef}
+              className="bg-transparent w-full outline-none border-0 border-cyan-900 text-cyan-900 font-semibold  border-b-2 block p-2 placeholder:text-cyan-900 focus:shadow-md focus:shadow-cyan-900"
             />
           </div>
           <div className="px-4 mt-4 flex flex-col gap-y-2  text-cyan-900">
@@ -133,7 +134,7 @@ const MobileNav = () => {
                 );
               })
             ) : (
-              <p>No Match resault ...</p>
+              <p>No Match Result ...</p>
             )}
             </div>
           </div>
@@ -152,26 +153,3 @@ const MobileNav = () => {
 };
 
 export default MobileNav;
-/* 
-<div>
-          <button
-            type="button"
-            onClick={() => setShow(!show)}
-            className="text-2xl text-gray-700"
-          >
-            <RiSearch2Line />
-          </button>
-        </div>
-        <div
-          className={`fixed top-0 left-0 bg-gray-300 z-50  overflow-hidden w-screen h-screen transition-all ease-in-out duration-300 ${
-            show ? "translate-y-0" : "-translate-y-full"
-          }`}
-        >
-          <div
-            onClick={() => setShow(false)}
-            className="w-full flex justify-end p-8 text-gray-200 text-3xl"
-          >
-            <RiCloseFill />
-          </div>
-        </div>
-*/

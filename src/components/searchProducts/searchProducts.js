@@ -26,14 +26,14 @@ const SearchProducts = ({ show }) => {
         onChange={changeHandler}
         className={
           show
-            ? "translate-y-0 z-10  transition-all duration-500 ease-linear py-2 px-8 w-56 rounded-md bg-gray-200 text-gray-600 border-none outline-none focus:ring-2 focus:shadow-md focus:shadow-cyan-900 focus:ring-cyan-900 "
+            ? "translate-y-0 z-10  transition-all duration-500 ease-linear py-2 px-8 md:w-32 lg:w-56 rounded-md bg-gray-200 text-gray-600 border-none outline-none focus:ring-2 focus:shadow-md focus:shadow-cyan-900 focus:ring-cyan-900 "
             : "-translate-y-96 "
         }
       />
 
         {show && (
           <div
-        className={`flex flex-col gap-y-2 max-h-96 overflow-auto bg-gray-200 shadow-md  rounded-md p-2 absolute w-full mt-2  ${
+        className={`flex md:flex-wrap gap-x-4 lg:flex-nowrap lg:flex-col gap-y-4 max-h-96 overflow-auto bg-gray-200 shadow-md  rounded-md p-2 absolute md:right-0 md:w-[500px] lg:w-full mt-2  ${
           input.length !== 0
             ? "opacity-100 translate-x-0 transition-opacity ease-in-out duration-500"
             : "opacity-0 translate-x-full"
@@ -44,7 +44,7 @@ const SearchProducts = ({ show }) => {
                   <Link
                     to={`/product/${item._id}`}
                     key={item._id}
-                    className="flex gap-x-2 hover:bg-gray-500  hover:text-slate-100 hover:rounded-md group border-0 border-b-2 border-gray-400 transition-all ease-in-out duration-300"
+                    className="flex gap-x-2 md:mx-auto flex-auto hover:bg-gray-500  hover:text-slate-100 hover:rounded-md group border-0 border-b-2 border-gray-400 transition-all ease-in-out duration-300"
                   >
                     <div className="w-16 p-1">
                       <img

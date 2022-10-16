@@ -51,7 +51,7 @@ const TopNavigation = ({show , setShow}) => {
             <span
               onClick={() => setShow(!show)}
               className={
-                `text-xl absolute right-0 transition-all ease-in-out duration-500 cursor-pointer ${show ? '-translate-x-[12.5rem] z-10' : 'translate-x-0' }`
+                `text-xl absolute right-0 transition-all ease-in-out duration-500 cursor-pointer ${show ? 'md:-translate-x-[6.5rem] lg:-translate-x-[12.5rem] z-10' : 'translate-x-0' }`
               }
             >
               <RiSearch2Line />
