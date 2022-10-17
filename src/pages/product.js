@@ -8,15 +8,18 @@ import {
   IoBagHandleOutline,
   IoChevronDownOutline,
   IoCheckmarkSharp,
+  IoChevronBackOutline,
+  IoCaretBack
 } from "react-icons/io5";
 import { TbTruckDelivery, TbAward } from "react-icons/tb";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import TopNavigation from "../components/Navigation/topNavigation/TopNavigation";
 import { useCart, useCartAction } from "../provider/cartProvider";
 import { toast } from "react-toastify";
 import { getOneProducts } from "../services/getOneProducts";
 import { CheckInCart } from "../utils/checkIncart";
 import { toastStyle } from "../utils/toastStyle";
+import MobileNav from "../components/mobileNav/MobileNav";
 
 const Colors = [
   { id: 1, name: "gray", code: "bg-gray-500", isActive: false },
@@ -44,6 +47,8 @@ const ProductPage = () => {
     }
   };
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -56,11 +61,31 @@ const ProductPage = () => {
     getProduct();
   }, [id]);
 
+
   return (
     <>
       <TopNavigation  show={show} setShow={setShow}/>
+      <MobileNav/>
+      <div className="mx-auto max-w-screen-xl flex justify-between items-center px-4 md:px-0 mt-4 pt-0 md:pt-20">
+        <button type="button" className="p-2 flex items-center text-gray-600" onClick={()=> navigate(-1)}><IoChevronBackOutline className="text-xl"/></button>
+        <div className="">
+          <ul className="flex flex-row-reverse">
+            <li className="flex items-center">
+              <IoCaretBack className="text-cyan-900"/>
+              <span className="font-semibold text-gray-800">products</span>
+            </li>
+            <li className="flex items-center">
+              <IoCaretBack className="text-cyan-900"/>
+              <span className="font-semibold text-gray-800">{product.categories}</span>
+            </li>
+            <li>
+              <span className="text-gray-600">{product.name}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
       {product && (
-        <section onClick={() => setShow(false)} className="w-full grid grid-cols-12 pt-28 max-w-screen-xl mx-auto px-4 xl:px-0 ">
+        <section onClick={() => setShow(false)} className="w-full grid grid-cols-12 pt-8 max-w-screen-xl mx-auto px-4 xl:px-0 pb-28">
           <div className="col-span-12  lg:col-span-8">
             <ProductDetail product={product} setChooseColor={setChooseColor} />
           </div>
@@ -101,7 +126,7 @@ const ProductPage = () => {
               )}
             </div>
           </div>
-          <MObileCalculator product={product}/>
+          <MObileCalculator product={product} ChooseColors={ChooseColors} cartProduct={cartProduct}/>
         </section>
       )}
     </>
@@ -297,16 +322,22 @@ const ProductDetail = ({ product, setChooseColor }) => {
   );
 };
 
-const MObileCalculator = ({product}) =>{
+const MObileCalculator = ({product , ChooseColors , cartProduct}) =>{
+  const {cart} = useCart();
+  const inCart =  CheckInCart(cart , product);
+  
   return(
-    <div className="fixed bottom-2 px-4 flex justify-center col-span-12 w-full md:hidden mx-auto left-0">
-      <div className="bg-gray-500 mx-auto rounded-md w-full shadow-xl flex items-center justify-between px-4">
-        <div className="flex flex-col ">
-          <h1>TotalPrice :</h1>
-          <p>1000$</p>
+    <div className="fixed bottom-2 px-2 flex justify-center col-span-12 w-full md:hidden mx-auto left-0">
+      <div className="bg-gray-400 bg-opacity-90 mx-auto rounded-md w-full shadow-xl flex items-center justify-between px-4 py-2">
+        <div className="flex  items-center">
+          <h1 className="font-bold text-lg p-2 text-cyan-900">TotalPrice :</h1>
+          <div>
+            <p className={`text-gray-700  ${product.discount!== 0 ? 'line-through font-normal' : 'font-semibold'}`}>{product.price} $</p>
+            {product.discount !== 0 && <p className="font-semibold">{product.price - product.discount}$</p>}
+          </div>
         </div>
         <div>
-          <button type="button" className="p-2 bg-cyan-900">Add to Cart</button>
+          {inCart ? <Link to={"/cart"} className="p-2 bg-cyan-900 text-gray-100 rounded-md hover:ring hover:ring-offset-2 hover:ring-cyan-900 transition-all ease-in-out duration-500">In Cart See Now ...</Link> :<button type="button" onClick={()=>cartProduct(product , ChooseColors)} className="p-2 bg-cyan-900 text-gray-100 rounded-md hover:ring hover:ring-offset-2 hover:ring-cyan-900 transition-all ease-in-out duration-500">Add to Cart</button> }
         </div>
       </div>
     </div>
