@@ -57,7 +57,7 @@ const MobileNav = () => {
           <button
             type="button"
             onClick={() => setShow(!show)}
-            className={`text-xl text-gray-700 ${show ? "hidden" : "block"}`}
+            className={`text-2xl text-gray-700 ${show ? "hidden" : "block"}`}
           >
             <RiSearch2Line />
           </button>
@@ -75,7 +75,7 @@ const MobileNav = () => {
             >
               <RiArrowLeftLine />
             </button>
-            <span className="text-xl text-cyan-900">
+            <span className="text-2xl text-cyan-900">
               <RiSearch2Line />
             </span>
             <input
@@ -140,7 +140,7 @@ const MobileNav = () => {
           </div>
         </div>
         <div className="flex items-center justify-center relative">
-          <Link to="/cart" className="text-xl text-gray-700">
+          <Link to="/cart" className="text-2xl text-gray-700">
             <RiShoppingBag3Line />
             <span className="w-3 h-4 flex items-center justify-center text-xs rounded-full bg-cyan-900 text-gray-300 absolute  bottom-3 left-3">
               {cart.length}

@@ -9,8 +9,9 @@ import {
   IoChevronDownOutline,
   IoCheckmarkSharp,
   IoChevronBackOutline,
-  IoCaretBack
+  IoCaretBack,
 } from "react-icons/io5";
+import { BsCartCheckFill } from "react-icons/bs";
 import { TbTruckDelivery, TbAward } from "react-icons/tb";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import TopNavigation from "../components/Navigation/topNavigation/TopNavigation";
@@ -66,7 +67,7 @@ const ProductPage = () => {
     <>
       <TopNavigation  show={show} setShow={setShow}/>
       <MobileNav/>
-      <div className="mx-auto max-w-screen-xl flex justify-between items-center px-4 md:px-0 mt-4 pt-0 md:pt-20">
+      <div className="mx-auto max-w-screen-xl  flex justify-between items-center px-4 lg:px-0 mt-4 pt-0 md:pt-20">
         <button type="button" className="p-2 flex items-center text-gray-600" onClick={()=> navigate(-1)}><IoChevronBackOutline className="text-xl"/></button>
         <div className="">
           <ul className="flex flex-row-reverse">
@@ -89,8 +90,8 @@ const ProductPage = () => {
           <div className="col-span-12  lg:col-span-8">
             <ProductDetail product={product} setChooseColor={setChooseColor} />
           </div>
-          <div className="hidden lg:flex flex-col lg:col-span-4 items-end pt-8 h-auto">
-            <div className="bg-gray-400 shadow-lg  rounded-lg sticky top-[5rem] p-4 flex flex-col gap-4 text-gray-800 ">
+          <div className="hidden lg:flex flex-col  lg:col-span-4 items-end pt-8 h-auto">
+            <div className="bg-gray-400  shadow-lg  rounded-lg lg:sticky top-[5rem] p-4 flex flex-col gap-4 text-gray-800 ">
               <ProductDescriptions product={product} />
               <h1 className="text-lg text-cyan-900 font-bold">
                 price :{" "}
@@ -327,17 +328,17 @@ const MObileCalculator = ({product , ChooseColors , cartProduct}) =>{
   const inCart =  CheckInCart(cart , product);
   
   return(
-    <div className="fixed bottom-2 px-2 flex justify-center col-span-12 w-full md:hidden mx-auto left-0">
+    <div className="fixed bottom-2 px-2 flex justify-center col-span-12 w-full lg:hidden mx-auto left-0">
       <div className="bg-gray-400 bg-opacity-90 mx-auto rounded-md w-full shadow-xl flex items-center justify-between px-4 py-2">
         <div className="flex  items-center">
           <h1 className="font-bold text-lg p-2 text-cyan-900">TotalPrice :</h1>
-          <div>
-            <p className={`text-gray-700  ${product.discount!== 0 ? 'line-through font-normal' : 'font-semibold'}`}>{product.price} $</p>
-            {product.discount !== 0 && <p className="font-semibold">{product.price - product.discount}$</p>}
+          <div className="flex gap-x-2">
+            <p className={`text-gray-700  ${product.discount!== 0 ? 'line-through font-normal text-xs' : 'font-semibold'}`}>{product.price} $</p>
+            {product.discount !== 0 && <p className="font-bold text-gray-800 text-lg">{product.price - product.discount}$</p>}
           </div>
         </div>
         <div>
-          {inCart ? <Link to={"/cart"} className="p-2 bg-cyan-900 text-gray-100 rounded-md hover:ring hover:ring-offset-2 hover:ring-cyan-900 transition-all ease-in-out duration-500">In Cart See Now ...</Link> :<button type="button" onClick={()=>cartProduct(product , ChooseColors)} className="p-2 bg-cyan-900 text-gray-100 rounded-md hover:ring hover:ring-offset-2 hover:ring-cyan-900 transition-all ease-in-out duration-500">Add to Cart</button> }
+          {inCart ? <Link to={"/cart"} className="px-4 md:px-10 py-3 bg-cyan-900 flex items-center gap-x-2   text-gray-100 rounded-md hover:ring hover:ring-offset-2 hover:ring-cyan-900 transition-all ease-in-out duration-500 font-semibold"><span>In Cart</span><BsCartCheckFill className="text-xl"/>  </Link> :<button type="button" onClick={()=>cartProduct(product , ChooseColors)} className="p-2 bg-cyan-900 text-gray-100 rounded-md hover:ring hover:ring-offset-2 hover:ring-cyan-900 transition-all ease-in-out duration-500">Add to Cart</button> }
         </div>
       </div>
     </div>

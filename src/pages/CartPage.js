@@ -12,8 +12,8 @@ const CartPage = () => {
   return (
     <Layout>
       {cart.length !== 0 && 
-        <section className="max-w-screen-xl mx-auto grid grid-cols-12 gap-2 pt-36">
-        <div className="col-span-8 bg-transparent flex justify-between p-2 items-center">
+        <section className="max-w-screen-xl mx-auto grid grid-cols-12 gap-2 pt-10 md:pt-36">
+        <div className="col-span-12 md:col-span-8 bg-transparent flex justify-between p-2 items-center px-4">
           <h1 className="font-semibold  text-cyan-900">Cart</h1>
           <Link to={"/products"} className="text-sm text-cyan-900 ">
             Return To shop
@@ -22,7 +22,7 @@ const CartPage = () => {
         <div className="col-span-12 md:col-span-8 rounded-md p-2 flex flex-col gap-y-2">
           <CartItems cart={cart} dispatch={dispatch}/>
         </div>
-        <div className="col-span-4">
+        <div className="col-span-12  md:col-span-4">
           <CalculatePrice cart={cart} />
         </div>
       </section>
@@ -127,7 +127,7 @@ const CalculatePrice = ({cart}) => {
           <h1 className="font-bold text-cyan-900 text-lg">{originalPrice - discountPrice}$</h1>
         </div>
       </div>
-      <div className="flex flex-col gap-4">
+      <div className="hidden md:flex flex-col gap-4">
         <Link
           to={Auth ? '/checkout' : "/login?redirect=checkout"}
           className="p-3 text-center bg-cyan-900 rounded-md text-slate-100 hover:ring hover:ring-offset-2 hover:ring-cyan-900 transition-all ease-in-out duration-500 flex justify-around items-center group"
@@ -138,6 +138,9 @@ const CalculatePrice = ({cart}) => {
         <button className="p-2 text-center bg-transparent-900 rounded-md border-2 border-cyan-900 text-cyan-900 hover:ring hover:ring-offset-2 hover:ring-cyan-900 transition-all ease-in-out duration-500">
           Cancellation of purchase
         </button>
+      </div>
+      <div className="pt-20 block md:hidden w-full">
+        <Link to={Auth ? '/checkout' : "/login?redirect=checkout"} className="w-full block text-center rounded-md p-3 bg-cyan-900 text-slate-100 transition-all ease-in-out duration-300 hover:ring hover:ring-offset-2 hover:ring-cyan-900">Continue the purches</Link>
       </div>
     </div>
   );
