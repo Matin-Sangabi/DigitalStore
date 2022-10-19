@@ -6,7 +6,7 @@ import {
   RiArrowLeftLine,
 } from "react-icons/ri";
 import { useCart } from "../../provider/cartProvider";
-import { Link } from "react-router-dom";
+import { Link , useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { useProducts } from "../../provider/productsProvider";
 import { searchProducts } from "../../utils/searchProducts";
@@ -38,7 +38,7 @@ const MobileNav = () => {
     }
     return () => window.removeEventListener("resize", updateWindowSize);
   }, [windowSize]);
-
+  const navigate = useNavigate();
   const searchHandler = (e) => {
     const value = e.target.value;
     setInputSearch(value);
@@ -94,13 +94,14 @@ const MobileNav = () => {
                 <div className="flex w-full items-center justify-center flex-wrap gap-4 mt-2">
                   {Categories.map((item, index) => {
                     return (
-                      <Link
+                      <button
                         key={index}
-                        to={`products?cat=${item.cat}`}
+                        type="button"
+                        onClick={()=> {navigate(`/products?cat=${item.cat}`) ; setShow(false)}}
                         className="p-2 bg-cyan-900 bg-opacity-95 text-gray-200 w-24 rounded-md text-center shadow-md shadow-gray-900 focus:ring focus:ring-offset-2 focus:ring-cyan-900 hover:ring hover:ring-offset-2 hover:ring-cyan-900 transition-all ease-out duration-500"
                       >
                         {item.name}
-                      </Link>
+                      </button>
                     );
                   })}
                 </div>

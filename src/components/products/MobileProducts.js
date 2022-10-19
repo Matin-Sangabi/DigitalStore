@@ -24,6 +24,7 @@ const MobileProducts = ({ products, setFilterProducts, filterProducts }) => {
     }
     return () => window.removeEventListener("resize", updateWindowSize);
   }, [windowSize]);
+  
   return (
     <>
       <div
@@ -138,7 +139,7 @@ const MobileProducts = ({ products, setFilterProducts, filterProducts }) => {
               className="font-semibold text-sm text-gray-800"
               onClick={() => setDropFilter({ open: true, id: 2 })}
             >
-              most popular
+              {selected.name}
             </span>
           </div>
           <div

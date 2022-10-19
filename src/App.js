@@ -13,6 +13,7 @@ import Login from "./pages/login";
 import SignIn from "./pages/signIn";
 import AuthProvider from "./provider/AuthProvider";
 import Profile from "./pages/profile";
+import CheckoutPage from "./pages/checkoutPage";
 
 const App = () => {
   return (
@@ -29,6 +30,7 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/signIn" element={<SignIn />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
             </Routes>
           </CartProvider>
         </ProductsProvider>
