@@ -6,12 +6,13 @@ import { useCart, useCartAction } from "../provider/cartProvider";
 import {toast} from 'react-toastify';
 import { toastStyle } from "../utils/toastStyle";
 import { useAuth } from "../provider/AuthProvider";
+import EmptyCart from "../components/emptyCart/emptyCart";
 const CartPage = () => {
   const { cart } = useCart();
   const dispatch = useCartAction();
   return (
     <Layout>
-      {cart.length !== 0 && 
+      {cart.length !== 0 ? 
         <section className="max-w-screen-xl mx-auto grid grid-cols-12 gap-2 pt-10 md:pt-36">
         <div className="col-span-12 md:col-span-8 bg-transparent flex justify-between p-2 items-center px-4">
           <h1 className="font-semibold  text-cyan-900">Cart</h1>
@@ -26,7 +27,7 @@ const CartPage = () => {
           <CalculatePrice cart={cart} />
         </div>
       </section>
-      }
+      : <EmptyCart/>}
     </Layout>
   );
 };
