@@ -4,7 +4,7 @@ import MobileNav from "../components/mobileNav/MobileNav";
 
 const NotFound = () => {
     return ( 
-        <Layout>
+        <Layout title={'404 Page Not Found'}>
             <MobileNav/>
             <section className="max-w-screen-xl mx-auto px-4 md:px-0 pt-20 md:pt-36">
                 <div className="w-full flex flex-col items-center justify-center gap-y-6">

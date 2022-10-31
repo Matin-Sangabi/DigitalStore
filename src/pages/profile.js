@@ -14,7 +14,7 @@ const Profile = () => {
         navigate('/login');
     }
     return ( 
-        <Layout>
+        <Layout title={'Profile'}>
             <section className="pt-36 max-w-screen-xl mx-auto">
                 <div className="bg-gray-200 w-full rounded-md shadow-md p-4 grid grid-cols-12">
                     <div className="col-span-6 flex gap-x-6">

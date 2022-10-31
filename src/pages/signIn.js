@@ -72,7 +72,7 @@ const SignIn = () => {
   });
   
   return (
-    <Layout>
+    <Layout title={'Sign In'}>
       <section className="pt-24 grid grid-cols-12 gap-8 md:mx-auto max-w-screen-xl">
         <div className="md:col-span-6  lg:col-span-7 w-full bg-hero-pattern bg-center bg-no-repeat bg-cover h-[85vh] rounded-md  hidden md:flex  justify-start items-center"></div>
         <div className="col-span-12 md:col-span-6 lg:col-span-5 mb-32 ">

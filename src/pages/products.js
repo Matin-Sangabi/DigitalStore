@@ -24,7 +24,7 @@ const ProductsPage = () => {
   }, [products, productsCategories]);
 
   return (
-    <Layout>
+    <Layout title={'Products'}>
       <MobileProducts products={products} setFilterProducts={setFilterProducts} filterProducts={filterProducts} />
       <div className="container mx-auto max-w-screen-xl px-4 grid grid-cols-12 grid-rows-[55px_minmax(500px,_1fr)] md:gap-8 pt-20">
         <SortSection
