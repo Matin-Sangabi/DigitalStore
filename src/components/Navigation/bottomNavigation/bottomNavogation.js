@@ -3,7 +3,7 @@ import  Navigation  from "../../../utils/Navigation";
 
 const BottomNav = () => {
   return (
-    <nav className="fixed  left-0 bottom-2  w-full  md:hidden flex justify-center items-center z-50">
+    <nav className="fixed  left-0 bottom-2  w-full  md:hidden flex justify-center items-center z-30">
       <ul className="flex items-center w-[95%] mx-auto bg-gray-400 justify-between p-2 rounded-md shadow-sm bg-opacity-90">
         {Navigation().map((nav, index) => {
           return (

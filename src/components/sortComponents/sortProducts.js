@@ -1,18 +1,19 @@
 import { Disclosure } from "@headlessui/react";
 import { NavLink } from "react-router-dom";
 import {
-    HiOutlineViewGrid,
-    HiOutlineDeviceTablet,
-    HiChevronDown,
-  } from "react-icons/hi";
-  import {
-    IoPhonePortraitOutline,
-    IoLaptopOutline,
-    IoWatchOutline,
-    IoRecordingOutline,
-  } from "react-icons/io5";
+  HiOutlineViewGrid,
+  HiOutlineDeviceTablet,
+  HiChevronDown,
+} from "react-icons/hi";
+import {
+  IoPhonePortraitOutline,
+  IoLaptopOutline,
+  IoWatchOutline,
+  IoRecordingOutline,
+} from "react-icons/io5";
+import { BiCategoryAlt, BiColorFill, BiWallet } from "react-icons/bi";
 
-  import RangeSlider from "../RangerSlider/RangerSlider";
+import RangeSlider from "../RangerSlider/RangerSlider";
 const SortProducts = [
   {
     title: "Categories",
@@ -24,6 +25,7 @@ const SortProducts = [
       { name: "AirPod", path: "air pod", icon: () => <IoRecordingOutline /> },
       { name: "IPad", path: "ipad", icon: () => <HiOutlineDeviceTablet /> },
     ],
+    symbol: () => <BiCategoryAlt />,
   },
   {
     title: "colors",
@@ -34,12 +36,12 @@ const SortProducts = [
       { name: "gray", path: "gray" },
       { name: "purple", path: "purple" },
     ],
+    symbol: () => <BiColorFill />,
   },
 ];
 
-const SortSectionsProducts = ({products , setFilterProducts}) => {
+const SortSectionsProducts = ({ products, setFilterProducts }) => {
   const changeHandler = (value) => {
-   
     const filter = [...products].filter(
       (p) => p.price >= value.min && p.price <= value.max
     );
@@ -54,7 +56,10 @@ const SortSectionsProducts = ({products , setFilterProducts}) => {
               {({ open }) => (
                 <>
                   <Disclosure.Button className="w-full flex justify-between items-center border-b-2 py-2  border-gray-600 text-gray-800">
-                    <h1 className="font-bold text-lg">{product.title}</h1>
+                    <h1 className="font-bold text-lg flex items-center gap-x-2">
+                      <span className="text-2xl text-gray-700">{product.symbol()}</span>
+                      <span>{product.title}</span>
+                    </h1>
                     <HiChevronDown
                       className={`${
                         open
@@ -63,7 +68,7 @@ const SortSectionsProducts = ({products , setFilterProducts}) => {
                       }  h-5 w-5 text-gray-800`}
                     />
                   </Disclosure.Button>
-                  <Disclosure.Panel className="pt-4 pb-2 text-gray-700 overflow-auto h-64">
+                  <Disclosure.Panel className="pt-4 pb-2 text-gray-700 overflow-auto h-64 scroll-smooth scrollbar">
                     <ul
                       className={
                         "mt-4 flex flex-col gap-2 mb-8 transition-all ease-in-out duration-500 "
@@ -71,7 +76,10 @@ const SortSectionsProducts = ({products , setFilterProducts}) => {
                     >
                       {product.content.map((item, index) => {
                         return (
-                          <li key={index} className="flex gap-x-2 items-center mb-4">
+                          <li
+                            key={index}
+                            className="flex gap-x-2 items-center mb-4"
+                          >
                             {item.icon && (
                               <span className="p-2 rounded-full bg-gray-700 bg-opacity-75 text-lg text-gray-200">
                                 {item.icon()}
@@ -101,7 +109,10 @@ const SortSectionsProducts = ({products , setFilterProducts}) => {
           {({ open }) => (
             <>
               <Disclosure.Button className="w-full flex justify-between items-center border-b-2 py-2 border-gray-600 text-gray-800">
-                <h1 className="font-bold text-lg">Price : </h1>
+                <h1 className="font-bold text-lg flex items-center gap-x-2">
+                  <span className="text-2xl text-gray-700"><BiWallet/></span>
+                  <span>Price</span>
+                </h1>
                 <HiChevronDown
                   className={`${
                     open

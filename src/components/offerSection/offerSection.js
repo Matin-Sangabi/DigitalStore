@@ -5,7 +5,7 @@ import { CalculatePriceOffer } from "../../utils/CalculateProductsOffer";
 import ScrollOffset from "../scroll/ScrollOffset";
 const OfferSection = () => {
   const products = useProducts();
-  console.log(products)
+  
   const [offerProducts, setOfferProducts] = useState([]);
   useEffect(() => {
     const offer = products.filter((p) => p.offPrice !== 0);

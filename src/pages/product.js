@@ -11,7 +11,6 @@ import {
   IoChevronBackOutline,
   IoCaretBack,
 } from "react-icons/io5";
-import { BsCartCheckFill } from "react-icons/bs";
 import { TbTruckDelivery, TbAward } from "react-icons/tb";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import TopNavigation from "../components/Navigation/topNavigation/TopNavigation";
@@ -21,6 +20,9 @@ import { getOneProducts } from "../services/getOneProducts";
 import { CheckInCart } from "../utils/checkIncart";
 import { toastStyle } from "../utils/toastStyle";
 import MobileNav from "../components/mobileNav/MobileNav";
+import ThumbGallery from "../components/thumbGallery/thumbGallery";
+import CartInfo from "../components/Cartinf/CartInfor";
+import { CalculatePriceOffer } from "../utils/CalculateProductsOffer";
 
 const Colors = [
   { id: 1, name: "gray", code: "bg-gray-500", isActive: false },
@@ -34,6 +36,7 @@ const ProductPage = () => {
   const [product, setProduct] = useState(false);
   const [ChooseColors, setChooseColor] = useState(false);
   const [show, setShow] = useState(false);
+  const [InCart, setInCart] = useState();
   const dispatch = useCartAction();
   const { cart } = useCart();
   const location = useParams();
@@ -41,15 +44,17 @@ const ProductPage = () => {
   const cartProduct = (product, ChooseColors) => {
     if (ChooseColors) {
       // const productDis = { ...product, color: ChooseColors };
-      toast.success(`${product.name} Added To Cart` , toastStyle)
+      toast.success(`${product.name} Added To Cart`, toastStyle);
       dispatch({ type: "ADD_TO_CART", payload: product, color: ChooseColors });
     } else {
       toast.error("please Choose Color", toastStyle);
     }
   };
-
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setInCart(CheckInCart(cart, product));
+  }, [cart, product]);
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -62,22 +67,30 @@ const ProductPage = () => {
     getProduct();
   }, [id]);
 
-
+  console.log(InCart);
   return (
     <>
-      <TopNavigation  show={show} setShow={setShow}/>
-      <MobileNav/>
+      <TopNavigation show={show} setShow={setShow} />
+      <MobileNav />
       <div className="mx-auto max-w-screen-xl  flex justify-between items-center px-4 lg:px-0 mt-4 pt-0 md:pt-20">
-        <button type="button" className="p-2 flex items-center text-gray-600" onClick={()=> navigate(-1)}><IoChevronBackOutline className="text-xl"/></button>
+        <button
+          type="button"
+          className="p-2 flex items-center text-gray-600"
+          onClick={() => navigate(-1)}
+        >
+          <IoChevronBackOutline className="text-xl" />
+        </button>
         <div className="">
           <ul className="flex flex-row-reverse">
             <li className="flex items-center">
-              <IoCaretBack className="text-cyan-900"/>
+              <IoCaretBack className="text-cyan-900" />
               <span className="font-semibold text-gray-800">products</span>
             </li>
             <li className="flex items-center">
-              <IoCaretBack className="text-cyan-900"/>
-              <span className="font-semibold text-gray-800">{product.categories}</span>
+              <IoCaretBack className="text-cyan-900" />
+              <span className="font-semibold text-gray-800">
+                {product.categories}
+              </span>
             </li>
             <li>
               <span className="text-gray-600">{product.name}</span>
@@ -86,22 +99,39 @@ const ProductPage = () => {
         </div>
       </div>
       {product && (
-        <section onClick={() => setShow(false)} className="w-full grid grid-cols-12 pt-8 max-w-screen-xl mx-auto px-4 xl:px-0 pb-28">
+        <section
+          onClick={() => setShow(false)}
+          className="w-full grid grid-cols-12 pt-8 max-w-screen-xl mx-auto px-4 xl:px-0 pb-28"
+        >
           <div className="col-span-12  lg:col-span-8">
             <ProductDetail product={product} setChooseColor={setChooseColor} />
           </div>
           <div className="hidden lg:flex flex-col  lg:col-span-4 items-end pt-8 h-auto">
             <div className="bg-gray-400  shadow-lg  rounded-lg lg:sticky top-[5rem] p-4 flex flex-col gap-4 text-gray-800 ">
               <ProductDescriptions product={product} />
-              <h1 className="text-lg text-cyan-900 font-bold">
-                price :{" "}
-                {product.discount !== 0
-                  ? product.price - product.discount
-                  : product.price}{" "}
-                $
-              </h1>
+              <div className="flex items-center justify-between gap-x-4 px-2">
+                <h1 className="text-xl text-gray-700 font-bold">price :</h1>
+                <div className="flex flex-col flex-1">
+                  {product.offPrice !== 0 && (
+                    <div className="flex items-center gap-x-2">
+                      <span className="w-7 h-7  rounded-full bg-cyan-900 flex justify-center items-center text-xs font-semibold text-gray-100">
+                        20%
+                      </span>
+                      <h1 className="text-sm text-gray-500 line-through">
+                        {product.price}$
+                      </h1>
+                    </div>
+                  )}
+                  <h1 className="font-bold text-cyan-900 text-xl">
+                    {product.offPrice !== 0
+                      ? CalculatePriceOffer(product.price, product.offPrice)
+                      : product.price}
+                    $
+                  </h1>
+                </div>
+              </div>
               <hr className="border-gray-500" />
-              {!CheckInCart(cart, product) ? (
+              {!InCart ? (
                 <button
                   type="button"
                   className="p-4 bg-cyan-900 rounded-md text-slate-100 text-center font-bold hover:ring hover:ring-offset-2 hover:ring-cyan-900 duration-500 transition-all ease-in-out"
@@ -111,23 +141,24 @@ const ProductPage = () => {
                 </button>
               ) : (
                 <div className="flex flex-col gap-y-2">
-                  <button
-                    type="button"
-                    className="bg-transparent w-full ring-2 font-semibold ring-cyan-900 rounded-md text-cyan-900 p-2"
-                  >
-                    InCart
-                  </button>
                   <Link
                     to={"/cart"}
-                    className="p-2 bg-cyan-900 rounded-md text-slate-100  text-center font-semibold hover:ring hover:ring-offset-2 hover:ring-cyan-900 duration-500 transition-all ease-in-out"
+                    className="bg-transparent text-center w-full ring-2 font-semibold ring-cyan-900 rounded-md text-cyan-900 p-2"
                   >
-                    See Cart Now ...
+                    InCart
                   </Link>
+                  <div className="p-2   flex items-center justify-end">
+                    <CartInfo item={InCart} />
+                  </div>
                 </div>
               )}
             </div>
           </div>
-          <MObileCalculator product={product} ChooseColors={ChooseColors} cartProduct={cartProduct}/>
+          <MObileCalculator
+            product={product}
+            ChooseColors={ChooseColors}
+            cartProduct={cartProduct}
+          />
         </section>
       )}
     </>
@@ -206,31 +237,7 @@ const ProductDetail = ({ product, setChooseColor }) => {
   }, [product]);
   return (
     <div className="grid grid-cols-12 mx-auto">
-      <div className="col-span-12 md:col-span-6 lg:col-span-6 flex flex-col gap-y-6 justify-center  mx-auto md:mx-0 h-min">
-        <div className="w-80 h-auto flex mx-auto md:mx-0  ">
-          <img
-            src={require(`./../assets/images/${product.image[0].path}`)}
-            alt={product.name}
-            className="max-w-full h-auto object-cover p-2"
-          />
-        </div>
-        <div className="hidden md:flex items-center gap-4 px-0 md:px-6 flex-1 ">
-          {product.image.map((item) => {
-            return (
-              <div
-                className="w-32 h-32 lg:w-28 lg:h-28 ring ring-slate-700 rounded-md cursor-pointer p-2 flex justify-center items-center hover:ring outline-none border-none hover:ring-offset-2 hover:ring-slate-700 transition-all ease-in-out duration-300 shadow-md shadow-cyan-900"
-                key={item._id}
-              >
-                <img
-                  src={require(`./../assets/images/${item.path}`)}
-                  alt={product.name}
-                  className="max-w-full h-28 object-cover p-1"
-                />
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      <ThumbGallery product={product} />
       <div className="col-span-12 md:col-span-6 lg:col-span-6 pt-9 flex flex-col gap-4 px-4 rounded-lg md:bg-transparent text-gray-300">
         <div className="flex items-center text-cyan-900 ">
           <span className="text-2xl font-bold w-8 h-8 flex justify-center items-center">
@@ -285,7 +292,7 @@ const ProductDetail = ({ product, setChooseColor }) => {
                   </li>
                 );
               })}
-              {
+              {product.spec.length > 3 && (
                 <li
                   className={`absolute -bottom-[6px] left-0 w-full px-8  bg-gradient-to-b pt-[2px] bg-gray-300 bg-opacity-80`}
                 >
@@ -314,7 +321,7 @@ const ProductDetail = ({ product, setChooseColor }) => {
                     </span>
                   </button>
                 </li>
-              }
+              )}
             </ul>
           </div>
         </div>
@@ -323,24 +330,54 @@ const ProductDetail = ({ product, setChooseColor }) => {
   );
 };
 
-const MObileCalculator = ({product , ChooseColors , cartProduct}) =>{
-  const {cart} = useCart();
-  const inCart =  CheckInCart(cart , product);
-  
-  return(
+const MObileCalculator = ({ product, ChooseColors, cartProduct }) => {
+  const { cart } = useCart();
+  const inCart = CheckInCart(cart, product);
+
+  return (
     <div className="fixed bottom-2 px-2 flex justify-center col-span-12 w-full lg:hidden mx-auto left-0">
       <div className="bg-gray-400 bg-opacity-90 mx-auto rounded-md w-full shadow-xl flex items-center justify-between px-4 py-2">
-        <div className="flex  items-center">
-          <h1 className="font-bold text-lg p-2 text-cyan-900">TotalPrice :</h1>
-          <div className="flex gap-x-2">
-            <p className={`text-gray-700  ${product.discount!== 0 ? 'line-through font-normal text-xs' : 'font-semibold'}`}>{product.price} $</p>
-            {product.discount !== 0 && <p className="font-bold text-gray-800 text-lg">{product.price - product.discount}$</p>}
+        <div className="flex items-end">
+          <h1 className="font-bold text-lg px-2 text-cyan-900 flex items-end h-full">
+            TotalPrice :
+          </h1>
+          <div className="flex flex-col flex-1">
+            {product.offPrice !== 0 && (
+              <div className="flex items-center gap-x-2">
+                <span className="w-7 h-7  rounded-full bg-cyan-900 flex justify-center items-center text-xs font-semibold text-gray-100">
+                  20%
+                </span>
+                <h1 className="text-sm text-gray-500 line-through">
+                  {product.price}$
+                </h1>
+              </div>
+            )}
+            <h1 className="font-bold text-cyan-900 text-xl">
+              {product.offPrice !== 0
+                ? CalculatePriceOffer(product.price, product.offPrice)
+                : product.price}
+              $
+            </h1>
           </div>
         </div>
         <div>
-          {inCart ? <Link to={"/cart"} className="px-4 md:px-10 py-3 bg-cyan-900 flex items-center gap-x-2   text-gray-100 rounded-md hover:ring hover:ring-offset-2 hover:ring-cyan-900 transition-all ease-in-out duration-500 font-semibold"><span>In Cart</span><BsCartCheckFill className="text-xl"/>  </Link> :<button type="button" onClick={()=>cartProduct(product , ChooseColors)} className="p-2 bg-cyan-900 text-gray-100 rounded-md hover:ring hover:ring-offset-2 hover:ring-cyan-900 transition-all ease-in-out duration-500">Add to Cart</button> }
+          {!inCart ? (
+            <button
+              type="button"
+              className="p-4 bg-cyan-900 rounded-md text-slate-100 text-center font-bold hover:ring hover:ring-offset-2 hover:ring-cyan-900 duration-500 transition-all ease-in-out"
+              onClick={() => cartProduct(product, ChooseColors)}
+            >
+              Add To cart{" "}
+            </button>
+          ) : (
+            <div className="flex flex-col">
+              <div className="p-2   flex items-center justify-end">
+                <CartInfo item={inCart} />
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
-  )
-}
+  );
+};

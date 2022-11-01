@@ -17,7 +17,7 @@ const CheckoutPage = () => {
   const { name } = useAuth();
   const { cart, total } = useCart();
 
-  console.log(cart);
+  const discountPrice = cart.reduce((acc , curr) => acc + curr.quantity * ((curr.price *(curr.offPrice /100))) , 0)
   return (
     <>
       <section className="pt-10 max-w-screen-xl px-4 md:px-0 mx-auto">
@@ -77,6 +77,10 @@ const CheckoutPage = () => {
                   </h1>
                   <span className="font-bold">{total}$</span>
                 </div>
+                <div className="flex w-full justify-between items-center font-semibold text-cyan-900 text-sm">
+                  <h1 className="">gain of the purchase :</h1>
+                  <span className="">{discountPrice}$</span>
+                </div>
                 <hr className="bg-gray-400 p-px bg-opacity-70 " />
                 <div className="flex flex-col gap-2">
                   <div className="flex w-full justify-between">
@@ -84,11 +88,17 @@ const CheckoutPage = () => {
                     <span>Free</span>
                   </div>
                   <span className="text-sm text-gray-500 ">
-                    The shipping cost is calculated based on the address, delivery time, weight and volume of your shipment
+                    The shipping cost is calculated based on the address,
+                    delivery time, weight and volume of your shipment
                   </span>
                 </div>
                 <hr className="bg-gray-400 p-px bg-opacity-70 " />
-                <button type="button" className="p-2 bg-cyan-900 rounded-md text-gray-100">the payment</button>
+                <button
+                  type="button"
+                  className="p-2 bg-cyan-900 rounded-md text-gray-100"
+                >
+                  the payment
+                </button>
               </div>
             </div>
           </div>
@@ -139,7 +149,9 @@ const CheckoutPage = () => {
                 </div>
               </div>
             </div>
-              <Link to={"/products"} className="text-cyan-700 text-sm mt-4  px-2">Return to shop</Link>
+            <Link to={"/products"} className="text-cyan-700 text-sm mt-4  px-2">
+              Return to shop
+            </Link>
           </div>
         </div>
       </section>

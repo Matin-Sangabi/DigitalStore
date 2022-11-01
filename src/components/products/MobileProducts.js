@@ -14,6 +14,25 @@ const MobileProducts = ({ products, setFilterProducts, filterProducts }) => {
   const [dropFilter, setDropFilter] = useState({ open: false, id: "" });
   const [selected, setSelected] = useState(filters[0]);
   const [windowSize, setWindowSize] = useState(window.innerWidth);
+  const [ShowSort , setShowSort] = useState();
+  const [MobileSort , setMobileSort] = useState(false);
+  useEffect(()=>{
+    const changeNavbarColor = () =>{
+      const scroll = window.scrollY;
+      setShowSort(scroll);
+      
+      if(scroll >= ShowSort){
+         setMobileSort(false);
+      }
+      else{
+        setMobileSort(true);
+      }
+      if(scroll === 0){
+        setMobileSort(false)
+      }
+    }
+    window.addEventListener("scroll" , changeNavbarColor)
+  } , [ShowSort]) 
   useEffect(() => {
     const updateWindowSize = () => {
       setWindowSize(window.innerWidth);
@@ -128,9 +147,9 @@ const MobileProducts = ({ products, setFilterProducts, filterProducts }) => {
           </div>
         </div>
       </div>
-      <div className="pt-2">
+      <div className="pt-2 relative">
         <MobileNav />
-        <div className="w-full flex gap-x-2 p-4 mt-6 md:hidden">
+        <div className={`w-full flex gap-x-2 p-4  md:hidden transition-all ease-in-out duration-500 ${MobileSort ? 'fixed z-40 left-0 top-0 ' : "relative mt-6"}`}>
           <div className="flex-1 bg-gray-200 shadow-md p-2 rounded-md flex items-center gap-x-2">
             <span className="text-cyan-900 text-2xl pt-1">
               <HiOutlineSortDescending />
@@ -158,16 +177,3 @@ const MobileProducts = ({ products, setFilterProducts, filterProducts }) => {
 };
 
 export default MobileProducts;
-/**
- * 
- * <div className="w-full flex items-center justify-between mb-4">
-            <h1 className="font-semibold text-cyan-900">Filter</h1>
-            <span className="text-xl text-cyan-900 "><HiChevronDown/></span>
-          </div>
-          <div className="w-full flex flex-col gap-y-4">
-            <SortSectionsProducts products={products} setFilterProducts={setFilterProducts}/>
-          </div>
-          <div className="absolute bottom-2 h-10 w-full bg-rose-300 z-10 left-0 p-2">
-            <button type="button" className="">Confirmation</button>
-          </div>
- */

@@ -15,13 +15,13 @@ const CartReducer = (state , action) => {
                 updatedCartItem.colors = action.color;
                 updatedCart[cartIndex] = updatedCartItem;
             }
-            const cartData = {...state , cart : updatedCart , total : state.total + Number(action.payload.price - action.payload.discount)}
+            const cartData = {...state , cart : updatedCart , total : state.total + Number(action.payload.price - (action.payload.price * (action.payload.offPrice /100)))}
                 
             return cartData;
         }
         case 'REMOVE_CART' : {
             const filterCart = [...state.cart].filter(c => c._id !== action.payload._id);
-            return {...state , cart : filterCart  , total : state.total - (action.payload.price - action.payload.discount)}
+            return {...state , cart : filterCart  , total : state.total - (action.payload.price - (action.payload.price * (action.payload.offPrice /100)))}
         }
         case 'DECREMENT_CART' : {
             const updatedCart = [...state.cart];
@@ -29,11 +29,11 @@ const CartReducer = (state , action) => {
             const updatedCartItem = {...updatedCart[cartIndex]};
             if(updatedCartItem.quantity === 1){
                 const filterCart = [...state.cart].filter(c => c._id !== action.payload._id);
-                return {...state , cart : filterCart  , total : state.total - (action.payload.price - action.payload.discount)}
+                return {...state , cart : filterCart  , total : state.total - (action.payload.price - (action.payload.price * (action.payload.offPrice /100)))}
             }else{
                 updatedCartItem.quantity --;
                 updatedCart[cartIndex] = updatedCartItem;
-                return({...state , cart : updatedCart , total : state.total - (action.payload.price - action.payload.discount)})
+                return({...state , cart : updatedCart , total : state.total - (action.payload.price - (action.payload.price * (action.payload.offPrice /100)))})
             }
         }
         default : return{state}

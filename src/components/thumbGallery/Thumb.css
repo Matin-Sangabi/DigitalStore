@@ -1,0 +1,20 @@
+  .swiper{
+    height: 100%;
+  }
+  .mySwiper3 {
+    box-sizing: border-box;
+    padding: 10px 0;
+    width: 100% !important;
+  }
+ 
+  .mySwiper3 .swiper-slide {
+    width: 23% !important;
+    height: 100px !important;
+    opacity: 0.4;
+    padding: 0.5rem;
+  }
+  
+  .mySwiper3 .swiper-slide-thumb-active {
+    opacity: 1;
+  }
+  

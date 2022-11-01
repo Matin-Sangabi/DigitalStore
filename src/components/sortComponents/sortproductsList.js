@@ -1,33 +1,49 @@
 import { useState } from "react";
+import { useProducts } from "../../provider/productsProvider";
 export const filters = [
   { name: "Most Popular", value: "popular" },
-  { name: "Most Visited", value: "Visited" },
-  { name: "the most expensive", value: "expensive" },
+  { name: "The Offer", value: "Offer" },
+  { name: "The most expensive", value: "expensive" },
   { name: "The cheapest", value: "cheapest" },
 ];
-export const switchFilterProducts = (e , filterProducts , setFilterProducts) =>{
-    switch (e) {
-        case "expensive": {
-          const sortFilter = [...filterProducts].sort((a, b) => {
-            return a.price > b.price ? -1 : 1;
-          });
-          return setFilterProducts(sortFilter);
-        }
-        case "cheapest": {
-          const sortFilter = [...filterProducts].sort((a, b) => {
-            return a.price > b.price ? 1 : -1;
-          });
-          return setFilterProducts(sortFilter);
-        }
-        default:
-          return setFilterProducts([...filterProducts]);
-      }
-}
+export const switchFilterProducts = (
+  e,
+  filterProducts,
+  setFilterProducts,
+  products
+) => {
+  switch (e) {
+    case "expensive": {
+      const sortFilter = [...filterProducts].sort((a, b) => {
+        return a.price > b.price ? -1 : 1;
+      });
+      return setFilterProducts(sortFilter);
+    }
+    case "cheapest": {
+      const sortFilter = [...filterProducts].sort((a, b) => {
+        return a.price > b.price ? 1 : -1;
+      });
+      return setFilterProducts(sortFilter);
+    }
+    case "Offer": {
+      const sortFilter = [...filterProducts].filter((p) => p.offPrice !== 0);
+      return setFilterProducts(sortFilter);
+    }
+    default:
+      return setFilterProducts([...products]);
+  }
+};
 const SortProductsList = ({ filterProducts, setFilterProducts }) => {
+  const products = useProducts();
   const [isActive, setIsActive] = useState("popular");
   const filteredProductsListItem = (e, item) => {
     setIsActive(item);
-    switchFilterProducts(e.target.value , filterProducts , setFilterProducts)
+    switchFilterProducts(
+      e.target.value,
+      filterProducts,
+      setFilterProducts,
+      products
+    );
   };
   return (
     <>

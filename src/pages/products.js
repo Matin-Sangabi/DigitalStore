@@ -2,10 +2,11 @@ import Layout from "../layout/layout";
 import { NavLink, useSearchParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useProducts } from "../provider/productsProvider";
-import {HiOutlineSortDescending} from "react-icons/hi";
+import { HiOutlineSortDescending } from "react-icons/hi";
 import MobileProducts from "../components/products/MobileProducts";
 import SortSectionsProducts from "../components/sortComponents/sortProducts";
 import SortProductsList from "../components/sortComponents/sortproductsList";
+import { CalculatePriceOffer } from "../utils/CalculateProductsOffer";
 
 const ProductsPage = () => {
   const [search] = useSearchParams();
@@ -24,8 +25,12 @@ const ProductsPage = () => {
   }, [products, productsCategories]);
 
   return (
-    <Layout title={'Products'}>
-      <MobileProducts products={products} setFilterProducts={setFilterProducts} filterProducts={filterProducts} />
+    <Layout title={"Products"}>
+      <MobileProducts
+        products={products}
+        setFilterProducts={setFilterProducts}
+        filterProducts={filterProducts}
+      />
       <div className="container mx-auto max-w-screen-xl px-4 grid grid-cols-12 grid-rows-[55px_minmax(500px,_1fr)] md:gap-8 pt-20">
         <SortSection
           products={products}
@@ -41,7 +46,7 @@ const ProductsPage = () => {
           />
         </div>
         <div className="col-span-12 md:col-span-8 lg:col-span-9 mt-0 md:mt-8">
-          <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4  mx-auto gap-8 px-4 pb-20">
+          <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4  mx-auto gap-y-10 gap-x-4 px-4 pb-20">
             <ProductsList filterProducts={filterProducts} />
           </section>
         </div>
@@ -53,11 +58,13 @@ const ProductsPage = () => {
 export default ProductsPage;
 
 const SortSection = ({ products, setFilterProducts }) => {
-  
   return (
     <div className="hidden md:block md:col-span-4 lg:col-span-3  row-span-2 sticky h-auto">
-      <div className="bg-gray-300 shadow-lg p-5 rounded-xl sticky top-[4.8rem] max-h-[calc(90vh-120px)] overflow-auto">
-        <SortSectionsProducts products={products} setFilterProducts={setFilterProducts}/>
+      <div className="bg-gray-300 shadow-lg p-5 rounded-xl sticky top-[4.8rem] max-h-[calc(90vh-120px)] overflow-auto scroll-smooth scrollbar">
+        <SortSectionsProducts
+          products={products}
+          setFilterProducts={setFilterProducts}
+        />
       </div>
     </div>
   );
@@ -70,7 +77,7 @@ const ProductsList = ({ filterProducts }) => {
         return (
           <NavLink
             to={`/product/${item._id}`}
-            className="bg-gray-300 shadow-md rounded-md flex flex-col p-2 gap-8 group hover:shadow-2xl hover:shadow-gray-800 transition-all ease-in-out duration-300"
+            className="bg-gray-300 shadow-md rounded-md flex flex-col p-2 gap-8 group hover:shadow-2xl hover:shadow-gray-800 transition-all ease-in-out duration-300 relative"
             key={index}
           >
             <div className="w-20 md:w-28 h-16 md:h-20 flex justify-center items-center group-hover:py-2 bg-opacity-80 bg-cyan-900 rounded-tr-3xl rounded-br-3xl rounded-tl-xl shadow-xl  mx-auto mb-8">
@@ -81,19 +88,33 @@ const ProductsList = ({ filterProducts }) => {
               />
             </div>
             <div className="flex flex-col items-start">
-              <h1 className="font-bold text-xs md:text-base xl:text-sm  text-cyan-900">
+              <h1 className="font-bold text-xs md:text-base xl:text-sm  text-cyan-900 h-8">
                 {item.name}
               </h1>
               <h1 className="text-gray-400">{item.categories}</h1>
               <div className="flex w-full justify-between mt-4 items-center">
-                <h1 className="text-sm md:text-base text-yellow-600 font-bold ">
-                  $ {item.price}
-                </h1>
-                <button className="w-8 h-8 bg-cyan-900 rounded-full text-slate-100 flex justify-center items-center text-lg group transition-all ease-linear duration-500 ">
-                  <span className="group-hover:rotate-[360deg] transition-all ease-in-out duration-500">
-                    +
+                <div className="flex flex-col">
+                  <h1 className="text-sm md:text-base text-yellow-600 font-bold ">
+                    {item.offPrice !== 0
+                      ? CalculatePriceOffer(item.price, item.offPrice)
+                      : item.price}{" "}
+                    $
+                  </h1>
+                  <h1
+                    className={`${
+                      item.offPrice !== 0
+                        ? "text-sm text-gray-400 font-semibold line-through block"
+                        : "hidden"
+                    }`}
+                  >
+                    {item.price}$
+                  </h1>
+                </div>
+                {item.offPrice !== 0 && (
+                  <span className="w-8 h-8  text-xs rounded-full bg-cyan-900 font-semibold flex justify-center items-center text-gray-100  ">
+                    {item.offPrice}%
                   </span>
-                </button>
+                )}
               </div>
             </div>
           </NavLink>
@@ -106,8 +127,27 @@ const ProductsList = ({ filterProducts }) => {
 const FilterProductsList = ({ filterProducts, setFilterProducts }) => {
   return (
     <div className="flex items-center gap-x-8 px-4">
-      <SortProductsList filterProducts={filterProducts} setFilterProducts={setFilterProducts}/>
+      <SortProductsList
+        filterProducts={filterProducts}
+        setFilterProducts={setFilterProducts}
+      />
     </div>
   );
 };
+/**
+            {item.offPrice !== 0 && (<span className="w-8 h-8 lg:w-10 lg:h-10 text-xs rounded-full bg-cyan-900 font-semibold flex justify-center items-center text-gray-100 lg:text-sm absolute -top-4 -right-0 z-10">{item.offPrice}%</span>)}
+ * 
 
+
+
+<button className="w-8 h-8 bg-cyan-900 rounded-full text-slate-100 flex justify-center items-center text-lg group transition-all ease-linear duration-500 ">
+                  <span className="group-hover:rotate-[360deg] transition-all ease-in-out duration-500">
+                    +
+                  </span>
+                </button>
+
+          <h1 className="text-sm md:text-base text-yellow-600 font-bold ">
+                    $ {item.price}
+                  </h1>
+
+ */
