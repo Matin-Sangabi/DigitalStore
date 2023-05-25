@@ -24,7 +24,10 @@ const ThumbGallery = ({ product }) => {
       >
         {product.image.map((item) => {
           return (
-            <SwiperSlide className="bg-transparent w-full h-[400px]  flex mx-auto md:mx-0 " key={item._id}>
+            <SwiperSlide
+              className="bg-transparent w-full h-[400px]  flex mx-auto md:mx-0 "
+              key={item._id}
+            >
               <img
                 src={require(`./../../assets/images/${item.path}`)}
                 alt={product.name}
@@ -61,8 +64,6 @@ const ThumbGallery = ({ product }) => {
     </div>
   );
 };
-
-
 
 export default ThumbGallery;
 /**

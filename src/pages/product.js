@@ -111,10 +111,10 @@ const ProductPage = () => {
               <div className="flex items-center justify-between gap-x-4 px-2">
                 <h1 className="text-xl text-gray-700 font-bold">price :</h1>
                 <div className="flex flex-col flex-1">
-                  {product.offPrice !== 0 && (
+                  {product.offPrice.isOff && (
                     <div className="flex items-center gap-x-2">
                       <span className="w-7 h-7  rounded-full bg-cyan-900 flex justify-center items-center text-xs font-semibold text-gray-100">
-                        20%
+                        {product.offPrice.cent}
                       </span>
                       <h1 className="text-sm text-gray-500 line-through">
                         {product.price}$
@@ -122,8 +122,8 @@ const ProductPage = () => {
                     </div>
                   )}
                   <h1 className="font-bold text-cyan-900 text-xl">
-                    {product.offPrice !== 0
-                      ? CalculatePriceOffer(product.price, product.offPrice)
+                    {product.offPrice.isOff
+                      ? product.price - product.discount
                       : product.price}
                     $
                   </h1>
@@ -269,7 +269,7 @@ const ProductDetail = ({ product, setChooseColor }) => {
           </div>
           <div className="flex flex-col mt-6">
             <h1 className="text-lg font-bold mb-6">
-              Product characteristics :{" "}
+              Product characteristics :
             </h1>
             <ul
               className={`list-outside list-disc px-8 flex flex-col relative overflow-hidden  ${
@@ -341,10 +341,10 @@ const MObileCalculator = ({ product, ChooseColors, cartProduct }) => {
             TotalPrice :
           </h1>
           <div className="flex flex-col flex-1">
-            {product.offPrice !== 0 && (
+            {product.offPrice.isOff && (
               <div className="flex items-center gap-x-2">
                 <span className="w-7 h-7  rounded-full bg-cyan-900 flex justify-center items-center text-xs font-semibold text-gray-100">
-                  20%
+                  {product.offPrice.cent}
                 </span>
                 <h1 className="text-sm text-gray-500 line-through">
                   {product.price}$
@@ -352,8 +352,8 @@ const MObileCalculator = ({ product, ChooseColors, cartProduct }) => {
               </div>
             )}
             <h1 className="font-bold text-cyan-900 text-xl">
-              {product.offPrice !== 0
-                ? CalculatePriceOffer(product.price, product.offPrice)
+              {product.offPrice.isOff
+                ? product.price - product.discount
                 : product.price}
               $
             </h1>
