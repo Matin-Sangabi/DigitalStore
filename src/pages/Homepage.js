@@ -16,8 +16,8 @@ const HomePage = () => {
 
       <div className="max-w-screen-xl mx-auto">
         <CategoriesSection />
-        <OfferSection />
-        <ProductsSection/>
+        {/* <OfferSection /> */}
+        {/* <ProductsSection/> */}
         <AdvertisingSection/>
         <AdvertisingSection2/>
         {/* <AppleTvPlus/> */}

@@ -7,21 +7,23 @@ import {
 } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { getOneProducts } from "../../services/getOneProducts";
+import { getProducts } from "../../services/getProductsServicess";
 const WellComeSection = () => {
   const [product, setProducts] = useState(false);
-  const id = "635d0dc8e2388860ece8e9f3";
-  
+  // const id = "646f19e72b106d4658f093eb";
   useEffect(() => {
     const getProduct = async () => {
       try {
-        const { data } = await getOneProducts(id);
-        setProducts(data);
+        const { data } = await getProducts();
+        const headerSection = data.find((product) => product.headerSection);
+        setProducts(headerSection);
       } catch (err) {
         console.log(console.log(err));
       }
     };
     getProduct();
   }, []);
+  console.log(product);
   return (
     <section className="w-full relative overflow-hidden z-0 pt-36 pb-28 px-0 flex items-center before:content-[''] before:absolute before:-right-full before:top-[30%]   before:w-[260%] before:h-[200%] before:bg-gray-400 before:opacity-50  before:-z-10 before:skew-y-[135deg] mb-20 ">
       {product && (
@@ -64,7 +66,7 @@ const WellComeSection = () => {
               <div className="md:w-96 md:h-auto md:max-h-96">
                 {product && (
                   <img
-                    src={require(`./../../assets/images/${product.image[2].path}`)}
+                    src={require(`./../../assets/images/${product.image[3].path}`)}
                     className="max-w-full w-[330px] h-auto object-cover"
                     alt="name"
                   />

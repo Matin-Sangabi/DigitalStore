@@ -67,7 +67,6 @@ const ProductPage = () => {
     getProduct();
   }, [id]);
 
-  console.log(InCart);
   return (
     <>
       <TopNavigation show={show} setShow={setShow} />
