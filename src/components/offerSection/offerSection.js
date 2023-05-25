@@ -9,7 +9,7 @@ const OfferSection = () => {
     const offer = products.filter((product) => product.offPrice.isOff);
     setOfferProducts(offer);
   }, [products]);
-  console.log(offerProducts);
+
   const ref = useRef(null);
   const monthNames = [
     "January",
@@ -25,7 +25,7 @@ const OfferSection = () => {
     "November",
     "December",
   ];
-  if(!offerProducts) return <div>Loading ...</div>
+  if (!offerProducts) return <div>Loading ...</div>;
   return (
     <div className="grid grid-cols-12 w-full mx-auto text-gray-800  px-4  xl:px-0 mb-24">
       <div className="col-span-12 md:col-span-3 flex flex-col justify-start gap-1 mb-12 pt-3">
@@ -47,7 +47,7 @@ const OfferSection = () => {
                   className="flex flex-col items-center mb-6"
                   key={offer._id}
                 >
-                  <div className="w-36 h-auto relative flex items-center mb-4">
+                  <div className="w-32 h-auto relative flex items-center mb-4">
                     <img
                       src={require(`./../../assets/images/${offer.image[0].path}`)}
                       alt={offer.name}
@@ -59,15 +59,15 @@ const OfferSection = () => {
                   </div>
                   <div className="flex flex-col gap-4">
                     <h1 className="text-sm font-semibold h-10">{offer.name}</h1>
-                    <div className="flex gap-x-4">
+                    <div className="flex gap-x-2">
                       <h2 className="font-bold">Price : </h2>
                       <h2>
                         <span className="text-xs text-gray-600 line-through">
                           {offer.price} $
                         </span>{" "}
-                        <span className="font-bold  text-cyan-900">
-                          {offer.price - offer.discount} $
-                        </span>{" "}
+                        <span className="font-bold text-sm  text-cyan-900">
+                          {offer.price - offer.discount}$
+                        </span>
                       </h2>
                     </div>
                   </div>

@@ -22,7 +22,7 @@ const SortProducts = [
       { name: "IPhone", path: "phone", icon: () => <IoPhonePortraitOutline /> },
       { name: "MacBook", path: "Mac", icon: () => <IoLaptopOutline /> },
       { name: "AppleWatch", path: "watch", icon: () => <IoWatchOutline /> },
-      { name: "AirPod", path: "air pod", icon: () => <IoRecordingOutline /> },
+      { name: "AirPod", path: "airPod", icon: () => <IoRecordingOutline /> },
       { name: "IPad", path: "ipad", icon: () => <HiOutlineDeviceTablet /> },
     ],
     symbol: () => <BiCategoryAlt />,

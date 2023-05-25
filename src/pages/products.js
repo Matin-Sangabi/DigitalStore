@@ -6,7 +6,6 @@ import { HiOutlineSortDescending } from "react-icons/hi";
 import MobileProducts from "../components/products/MobileProducts";
 import SortSectionsProducts from "../components/sortComponents/sortProducts";
 import SortProductsList from "../components/sortComponents/sortproductsList";
-import { CalculatePriceOffer } from "../utils/CalculateProductsOffer";
 
 const ProductsPage = () => {
   const [search] = useSearchParams();
@@ -46,7 +45,7 @@ const ProductsPage = () => {
           />
         </div>
         <div className="col-span-12 md:col-span-8 lg:col-span-9 mt-0 md:mt-8">
-          <section className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4  mx-auto gap-y-10 gap-x-4 px-4 pb-20">
+          <section className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4  mx-auto gap-y-10 gap-x-4 px-4 pb-20">
             <ProductsList filterProducts={filterProducts} />
           </section>
         </div>
@@ -95,14 +94,14 @@ const ProductsList = ({ filterProducts }) => {
               <div className="flex w-full justify-between mt-4 items-center">
                 <div className="flex flex-col">
                   <h1 className="text-sm md:text-base text-yellow-600 font-bold ">
-                    {item.offPrice !== 0
-                      ? CalculatePriceOffer(item.price, item.offPrice)
-                      : item.price}{" "}
+                    {item.offPrice.isOff
+                      ? item.price - item.discount
+                      : item.price}
                     $
                   </h1>
                   <h1
                     className={`${
-                      item.offPrice !== 0
+                      item.offPrice.isOff
                         ? "text-sm text-gray-400 font-semibold line-through block"
                         : "hidden"
                     }`}
@@ -110,9 +109,9 @@ const ProductsList = ({ filterProducts }) => {
                     {item.price}$
                   </h1>
                 </div>
-                {item.offPrice !== 0 && (
+                {item.offPrice.isOff && (
                   <span className="w-8 h-8  text-xs rounded-full bg-cyan-900 font-semibold flex justify-center items-center text-gray-100  ">
-                    {item.offPrice}%
+                    {item.offPrice.cent}
                   </span>
                 )}
               </div>
@@ -134,20 +133,3 @@ const FilterProductsList = ({ filterProducts, setFilterProducts }) => {
     </div>
   );
 };
-/**
-            {item.offPrice !== 0 && (<span className="w-8 h-8 lg:w-10 lg:h-10 text-xs rounded-full bg-cyan-900 font-semibold flex justify-center items-center text-gray-100 lg:text-sm absolute -top-4 -right-0 z-10">{item.offPrice}%</span>)}
- * 
-
-
-
-<button className="w-8 h-8 bg-cyan-900 rounded-full text-slate-100 flex justify-center items-center text-lg group transition-all ease-linear duration-500 ">
-                  <span className="group-hover:rotate-[360deg] transition-all ease-in-out duration-500">
-                    +
-                  </span>
-                </button>
-
-          <h1 className="text-sm md:text-base text-yellow-600 font-bold ">
-                    $ {item.price}
-                  </h1>
-
- */
