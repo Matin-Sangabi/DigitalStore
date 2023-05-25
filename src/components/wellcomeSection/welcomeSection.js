@@ -23,7 +23,6 @@ const WellComeSection = () => {
     };
     getProduct();
   }, []);
-  console.log(product);
   return (
     <section className="w-full relative overflow-hidden z-0 pt-36 pb-28 px-0 flex items-center before:content-[''] before:absolute before:-right-full before:top-[30%]   before:w-[260%] before:h-[200%] before:bg-gray-400 before:opacity-50  before:-z-10 before:skew-y-[135deg] mb-20 ">
       {product && (
