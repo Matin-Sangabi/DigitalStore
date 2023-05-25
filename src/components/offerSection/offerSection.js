@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useProducts } from "../../provider/productsProvider";
-import { CalculatePriceOffer } from "../../utils/CalculateProductsOffer";
 import ScrollOffset from "../scroll/ScrollOffset";
 const OfferSection = () => {
   const products = useProducts();

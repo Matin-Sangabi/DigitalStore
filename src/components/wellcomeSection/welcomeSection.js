@@ -6,11 +6,9 @@ import {
   IoArrowForwardOutline,
 } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import { getOneProducts } from "../../services/getOneProducts";
 import { getProducts } from "../../services/getProductsServicess";
 const WellComeSection = () => {
   const [product, setProducts] = useState(false);
-  // const id = "646f19e72b106d4658f093eb";
   useEffect(() => {
     const getProduct = async () => {
       try {
@@ -47,7 +45,7 @@ const WellComeSection = () => {
                 Fumble, bumble, and tumble resistant.
               </p>
               <p className="text-gray-500 text-sm">
-                iOS 15. New ways to stay in the moment.
+                iOS 16. New ways to stay in the moment.
               </p>
               <div className="flex items-start justify-start relative z-40">
                 <Link

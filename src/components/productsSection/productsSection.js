@@ -27,9 +27,9 @@ const ProductsSection = () => {
                 key={product._id}
                 id={index}
               >
-                {product.offPrice !== 0 && (
+                {product.discount !== 0 && (
                   <div className="w-10 h-10 rounded-full bg-cyan-900 flex justify-center items-center text-sm font-semibold text-gray-100 absolute -right-2">
-                    {product.offPrice}%
+                    {product.offPrice.cent}
                   </div>
                 )}
                 <div className="w-40 h-52 p-2 mb-4">
@@ -53,21 +53,17 @@ const ProductsSection = () => {
                     <h2 className="space-x-2">
                       <span
                         className={`${
-                          product.offPrice !== 0 || product.discount !== 0
+                          product.offPrice.isOff  || product.discount !== 0
                             ? "text-xs line-through text-gray-500"
                             : "text-sm text-gray-800 font-semibold"
                         }`}
                       >
                         {product.price} $
                       </span>
-                      {product.offPrice !== 0 || product.discount !== 0 ? (
+                      {product.offPrice.isOff || product.discount !== 0 ? (
                         <span className="font-bold">
-                          {product.offPrice !== 0
-                            ? CalculatePriceOffer(
-                                product.price,
-                                product.offPrice
-                              )
-                            : product.price - product.discount}
+                          {product.offPrice.isOff
+                            && product.price - product.discount}
                           $
                         </span>
                       ) : (
