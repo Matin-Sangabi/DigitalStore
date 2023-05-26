@@ -33,7 +33,7 @@ const CartPage = () => {
             <CartItems cart={cart} dispatch={dispatch} />
           </div>
           <div className="col-span-12  md:col-span-4">
-            <CalculatePrice cart={cart} />
+            <CalculatePrice cart={cart} dispatch={dispatch} />
           </div>
         </section>
       ) : (
@@ -76,7 +76,9 @@ const CartItems = ({ cart, dispatch }) => {
             </div>
             <div className="flex flex-col h-20 justify-between flex-1">
               <div className="flex flex-col ">
-                <h1 className="font-semibold text-gray-800 text-xs md:text-sm lg:text-base">{item.name}</h1>
+                <h1 className="font-semibold text-gray-800 text-xs md:text-sm lg:text-base">
+                  {item.name}
+                </h1>
                 <div className="flex gap-x-2 items-center">
                   <p className="text-sm text-gray-500">{item.model}</p>
                   <span
@@ -87,7 +89,7 @@ const CartItems = ({ cart, dispatch }) => {
                 </div>
               </div>
               <div className="flex items-center flex-1">
-                {item.offPrice !== 0 && (
+                {item.offPrice.isOff && (
                   <div className="flex items-center gap-x-2">
                     <h1 className="text-xs text-gray-500 line-through">
                       {item.price}$
@@ -95,8 +97,8 @@ const CartItems = ({ cart, dispatch }) => {
                   </div>
                 )}
                 <h1 className="font-bold text-cyan-900 text-xl">
-                  {item.offPrice !== 0
-                    ? CalculatePriceOffer(item.price, item.offPrice)
+                  {item.offPrice.isOff
+                    ? item.price - item.discount
                     : item.price}
                   $
                 </h1>
@@ -139,15 +141,15 @@ const CartItems = ({ cart, dispatch }) => {
   );
 };
 
-const CalculatePrice = ({ cart }) => {
+const CalculatePrice = ({ cart  , dispatch}) => {
   const Auth = useAuth();
   const originalPrice = cart.reduce(
     (acc, curr) => acc + curr.quantity * curr.price,
     0
   );
-  
+
   const discountPrice = cart.reduce(
-    (acc, curr) => acc + curr.quantity * ((curr.price *(curr.offPrice /100))),
+    (acc, curr) => acc + curr.quantity * curr.discount,
     0
   );
   return (
@@ -176,7 +178,10 @@ const CalculatePrice = ({ cart }) => {
           <span>Continue the purchase</span>
           <HiOutlineArrowRight className="group-hover:translate-x-4 transition-all ease-in-out duration-500" />
         </Link>
-        <button className="p-2 text-center bg-transparent-900 rounded-md border-2 border-cyan-900 text-cyan-900 hover:ring hover:ring-offset-2 hover:ring-cyan-900 transition-all ease-in-out duration-500">
+        <button
+          onClick={() =>dispatch({ type: "CLEAR_CART" })}
+          className="p-2 text-center bg-transparent-900 rounded-md border-2 border-cyan-900 text-cyan-900 hover:ring hover:ring-offset-2 hover:ring-cyan-900 transition-all ease-in-out duration-500"
+        >
           Cancellation of purchase
         </button>
       </div>
