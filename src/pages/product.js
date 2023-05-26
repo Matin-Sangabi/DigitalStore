@@ -22,7 +22,6 @@ import { toastStyle } from "../utils/toastStyle";
 import MobileNav from "../components/mobileNav/MobileNav";
 import ThumbGallery from "../components/thumbGallery/thumbGallery";
 import CartInfo from "../components/Cartinf/CartInfor";
-import { CalculatePriceOffer } from "../utils/CalculateProductsOffer";
 
 const Colors = [
   { id: 1, name: "gray", code: "bg-gray-500", isActive: false },

@@ -13,7 +13,7 @@ import { toast } from "react-toastify";
 import { toastStyle } from "../utils/toastStyle";
 import { useAuth } from "../provider/AuthProvider";
 import EmptyCart from "../components/emptyCart/emptyCart";
-import { CalculatePriceOffer } from "../utils/CalculateProductsOffer";
+
 
 const CartPage = () => {
   const { cart } = useCart();

@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useProducts } from "../../provider/productsProvider";
-import { CalculatePriceOffer } from "../../utils/CalculateProductsOffer";
 import ScrollOffset from "../scroll/ScrollOffset";
 const ProductsSection = () => {
   const products = useProducts();
@@ -23,12 +22,12 @@ const ProductsSection = () => {
             return (
               <Link
                 to={`/product/${product._id}`}
-                className="flex flex-col items-center p-2 bg-gray-200 rounded-md mb-4 relative"
+                className="flex flex-col items-center p-2 bg-gray-200  hover:text-slate-100 group hover:bg-cyan-900 transition-all ease-in-out duration-300 rounded-md mb-4 relative"
                 key={product._id}
                 id={index}
               >
                 {product.discount !== 0 && (
-                  <div className="w-10 h-10 rounded-full bg-cyan-900 flex justify-center items-center text-sm font-semibold text-gray-100 absolute -right-2">
+                  <div className="w-10 h-10 rounded-full group-hover:bg-slate-50 group-hover:text-cyan-900 transition-all ease-in-out duration-300 bg-cyan-900 flex justify-center items-center text-sm font-semibold text-gray-100 absolute -right-2">
                     {product.offPrice.cent}
                   </div>
                 )}
@@ -41,10 +40,10 @@ const ProductsSection = () => {
                 </div>
                 <div className="flex flex-col">
                   <div className="h-10 mb-4">
-                    <h1 className="text-sm text-gray-800 font-semibold">
+                    <h1 className="text-sm group-hover:text-slate-100 text-gray-800 font-semibold">
                       {product.name}
                     </h1>
-                    <h2 className="text-xs text-gray-500">
+                    <h2 className="text-xs group-hover:text-gray-300 text-gray-500">
                       {product.categories}
                     </h2>
                   </div>
@@ -55,13 +54,13 @@ const ProductsSection = () => {
                         className={`${
                           product.offPrice.isOff  || product.discount !== 0
                             ? "text-xs line-through text-gray-500"
-                            : "text-sm text-gray-800 font-semibold"
+                            : "text-sm group-hover:text-slate-100 text-gray-800 font-semibold"
                         }`}
                       >
                         {product.price} $
                       </span>
                       {product.offPrice.isOff || product.discount !== 0 ? (
-                        <span className="font-bold">
+                        <span className="font-bold ">
                           {product.offPrice.isOff
                             && product.price - product.discount}
                           $
