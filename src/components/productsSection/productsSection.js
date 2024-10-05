@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useRef } from "react";
 import { useProducts } from "../../provider/productsProvider";
 import ScrollOffset from "../scroll/ScrollOffset";
+import { calcDiscount } from "../../utils/CalculateProductsOffer";
 const ProductsSection = () => {
   const products = useProducts();
   const ref = useRef(null);
@@ -15,7 +16,7 @@ const ProductsSection = () => {
       </div>
       <div className="col-span-12 md:col-span-9 flex flex-col">
         <div
-          className="flex flex-nowrap items-center overflow-x-auto mb-4 w-full gap-x-8 md:gap-x-8 scroll-smooth scrollbar"
+          className="flex flex-nowrap items-center overflow-x-auto mb-4 w-full gap-x-4 md:gap-x-5 scroll-smooth scrollbar"
           ref={ref}
         >
           {products.map((product, index) => {
@@ -26,9 +27,9 @@ const ProductsSection = () => {
                 key={product._id}
                 id={index}
               >
-                {product.discount !== 0 && (
-                  <div className="w-10 h-10 rounded-full group-hover:bg-slate-50 group-hover:text-cyan-900 transition-all ease-in-out duration-300 bg-cyan-900 flex justify-center items-center text-sm font-semibold text-gray-100 absolute -right-2">
-                    {product.offPrice.cent}
+                {Boolean(product.offPrice)  && (
+                  <div className="w-10 h-10 rounded-full text-xs group-hover:bg-slate-50 group-hover:text-cyan-900 transition-all ease-in-out duration-300 bg-cyan-900 flex justify-center items-center  font-semibold text-gray-100 absolute -right-2">
+                    {calcDiscount(product.price , product?.offPrice)}%
                   </div>
                 )}
                 <div className="w-40 h-52 p-2 mb-4">
@@ -52,17 +53,17 @@ const ProductsSection = () => {
                     <h2 className="space-x-2">
                       <span
                         className={`${
-                          product.offPrice.isOff  || product.discount !== 0
+                          product.offPrice  || product.discount !== 0
                             ? "text-xs line-through text-gray-500"
                             : "text-sm group-hover:text-slate-100 text-gray-800 font-semibold"
                         }`}
                       >
                         {product.price} $
                       </span>
-                      {product.offPrice.isOff || product.discount !== 0 ? (
+                      {Boolean(product.offPrice) || product.discount !== 0 ? (
                         <span className="font-bold ">
-                          {product.offPrice.isOff
-                            && product.price - product.discount}
+                          {product.offPrice
+                            && product.offPrice}
                           $
                         </span>
                       ) : (

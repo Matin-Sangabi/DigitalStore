@@ -9,7 +9,7 @@
  
   .mySwiper3 .swiper-slide {
     width: 23% !important;
-    height: 100px !important;
+    /* height: 100px !important; */
     opacity: 0.4;
     padding: 0.5rem;
   }

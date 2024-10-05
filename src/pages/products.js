@@ -6,6 +6,7 @@ import { HiOutlineSortDescending } from "react-icons/hi";
 import MobileProducts from "../components/products/MobileProducts";
 import SortSectionsProducts from "../components/sortComponents/sortProducts";
 import SortProductsList from "../components/sortComponents/sortproductsList";
+import { calcDiscount } from "../utils/CalculateProductsOffer";
 
 const ProductsPage = () => {
   const [search] = useSearchParams();
@@ -94,14 +95,14 @@ const ProductsList = ({ filterProducts }) => {
               <div className="flex w-full justify-between mt-4 items-center">
                 <div className="flex flex-col">
                   <h1 className="text-sm md:text-base text-yellow-600 font-bold ">
-                    {item.offPrice.isOff
-                      ? item.price - item.discount
+                    {Boolean(item.offPrice)
+                      ? item.offPrice
                       : item.price}
                     $
                   </h1>
                   <h1
                     className={`${
-                      item.offPrice.isOff
+                      item.offPrice
                         ? "text-sm text-gray-400 font-semibold line-through block"
                         : "hidden"
                     }`}
@@ -109,9 +110,9 @@ const ProductsList = ({ filterProducts }) => {
                     {item.price}$
                   </h1>
                 </div>
-                {item.offPrice.isOff && (
-                  <span className="w-8 h-8  text-xs rounded-full bg-cyan-900 font-semibold flex justify-center items-center text-gray-100  ">
-                    {item.offPrice.cent}
+                {Boolean(item.offPrice) && (
+                  <span className="w-8 h-8  text-[10px] rounded-full bg-cyan-900 font-semibold flex justify-center items-center text-gray-100  ">
+                    {calcDiscount(item?.price , item?.offPrice)}%
                   </span>
                 )}
               </div>

@@ -22,6 +22,7 @@ import { toastStyle } from "../utils/toastStyle";
 import MobileNav from "../components/mobileNav/MobileNav";
 import ThumbGallery from "../components/thumbGallery/thumbGallery";
 import CartInfo from "../components/Cartinf/CartInfor";
+import { calcDiscount } from "../utils/CalculateProductsOffer";
 
 const Colors = [
   { id: 1, name: "gray", code: "bg-gray-500", isActive: false },
@@ -110,10 +111,10 @@ const ProductPage = () => {
               <div className="flex items-center justify-between gap-x-4 px-2">
                 <h1 className="text-xl text-gray-700 font-bold">price :</h1>
                 <div className="flex flex-col flex-1">
-                  {product.offPrice.isOff && (
+                  {Boolean(product.offPrice) && (
                     <div className="flex items-center gap-x-2">
-                      <span className="w-7 h-7  rounded-full bg-cyan-900 flex justify-center items-center text-xs font-semibold text-gray-100">
-                        {product.offPrice.cent}
+                      <span className="w-7 h-7  rounded-full bg-cyan-900 flex justify-center items-center text-[10px] font-semibold text-gray-100">
+                        {calcDiscount(product?.price, product?.offPrice)}%
                       </span>
                       <h1 className="text-sm text-gray-500 line-through">
                         {product.price}$
@@ -121,8 +122,8 @@ const ProductPage = () => {
                     </div>
                   )}
                   <h1 className="font-bold text-cyan-900 text-xl">
-                    {product.offPrice.isOff
-                      ? product.price - product.discount
+                    {Boolean(product.offPrice)
+                      ? product?.offPrice
                       : product.price}
                     $
                   </h1>
@@ -340,10 +341,10 @@ const MObileCalculator = ({ product, ChooseColors, cartProduct }) => {
             TotalPrice :
           </h1>
           <div className="flex flex-col flex-1">
-            {product.offPrice.isOff && (
+            {Boolean(product.offPrice) && (
               <div className="flex items-center gap-x-2">
                 <span className="w-7 h-7  rounded-full bg-cyan-900 flex justify-center items-center text-xs font-semibold text-gray-100">
-                  {product.offPrice.cent}
+                  {calcDiscount(product?.price, product?.offPrice)}%
                 </span>
                 <h1 className="text-sm text-gray-500 line-through">
                   {product.price}$
@@ -351,8 +352,8 @@ const MObileCalculator = ({ product, ChooseColors, cartProduct }) => {
               </div>
             )}
             <h1 className="font-bold text-cyan-900 text-xl">
-              {product.offPrice.isOff
-                ? product.price - product.discount
+              {Boolean(product.offPrice)
+                ? product?.offPrice
                 : product.price}
               $
             </h1>

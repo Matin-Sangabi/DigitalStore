@@ -2,7 +2,7 @@ import axios from "axios";
 
 axios.defaults.baseURL =
   process.env.NODE_ENV === "development"
-    ? "http://localhost:5000/api"
+    ? "https://journal-trade-jkrq.vercel.app/api"
     : "https://digitalnodestore.iran.liara.run/api";
 
 export const http = {

@@ -50,7 +50,7 @@ const ThumbGallery = ({ product }) => {
           return (
             <SwiperSlide
               key={item._id}
-              className="bg-transparent ring-2 ring-cyan-900 rounded-md mx-4 cursor-pointer"
+              className="bg-transparent ring-2 ring-cyan-900 h-full min-h-32 max-h-32 rounded-md mx-4 cursor-pointer"
             >
               <img
                 src={`/images/${item.path}`}

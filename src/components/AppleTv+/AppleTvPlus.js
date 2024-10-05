@@ -34,7 +34,7 @@ const AppleTvPlus = () => {
         <SwiperSlide>
           <div className="relative">
             <img
-              src={require("./../../assets/images/tv+/See-Apple-TV-series-1.jpg")}
+              src={"/images/tv+/See-Apple-TV-series-1.jpg"}
               className="w-full h-auto object-cover"
               alt="appleTv+"
             />

@@ -1,5 +1,6 @@
 import AdvertisingSection from "../components/AdvertisingSection/AdvertisingSection";
 import AdvertisingSection2 from "../components/AdvertisingSection/AdvertisingSection2";
+
 import CategoriesSection from "../components/categoriesSection/categoriesSection";
 import MobileNav from "../components/mobileNav/MobileNav";
 import OfferSection from "../components/offerSection/offerSection";

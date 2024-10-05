@@ -62,7 +62,8 @@ const AdvertisingSection2 = () => {
           </div>
         </div>
       </div>
-      <Swiper
+     <div className="w-full col-span-12 md:col-span-11   px-10 lg:col-span-4 ">
+     <Swiper
         effect={"cards"}
         grabCursor={true}
         autoplay={{
@@ -70,7 +71,7 @@ const AdvertisingSection2 = () => {
           disableOnInteraction: false,
         }}
         modules={[Autoplay, EffectCards]}
-        className="col-span-12 md:col-span-11   px-10 lg:col-span-4 "
+        className="w-full "
       >
         <SwiperSlide className="bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-gray-900 via-gray-100 to-gray-900 rounded-lg">
           <Link to={"/products?cat=ipad"}>
@@ -91,6 +92,7 @@ const AdvertisingSection2 = () => {
           </Link>
         </SwiperSlide>
       </Swiper>
+     </div>
     </div>
   );
 };

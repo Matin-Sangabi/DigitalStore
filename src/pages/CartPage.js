@@ -13,6 +13,7 @@ import { toast } from "react-toastify";
 import { toastStyle } from "../utils/toastStyle";
 import { useAuth } from "../provider/AuthProvider";
 import EmptyCart from "../components/emptyCart/emptyCart";
+import { calcDiscount } from "../utils/CalculateProductsOffer";
 
 
 const CartPage = () => {
@@ -89,7 +90,7 @@ const CartItems = ({ cart, dispatch }) => {
                 </div>
               </div>
               <div className="flex items-center flex-1">
-                {item.offPrice.isOff && (
+                {Boolean(item.offPrice)&& (
                   <div className="flex items-center gap-x-2">
                     <h1 className="text-xs text-gray-500 line-through">
                       {item.price}$
@@ -97,8 +98,8 @@ const CartItems = ({ cart, dispatch }) => {
                   </div>
                 )}
                 <h1 className="font-bold text-cyan-900 text-xl">
-                  {item.offPrice.isOff
-                    ? item.price - item.discount
+                  {Boolean(item.offPrice)
+                    ? item.offPrice
                     : item.price}
                   $
                 </h1>
@@ -148,10 +149,9 @@ const CalculatePrice = ({ cart  , dispatch}) => {
     0
   );
 
-  const discountPrice = cart.reduce(
-    (acc, curr) => acc + curr.quantity * curr.discount,
-    0
-  );
+  const finalPrice = cart.reduce((acc , curr) => acc + curr.quantity * (Boolean(curr.offPrice) ? curr.offPrice : curr.price)  , 0)
+
+
   return (
     <div className="flex flex-col gap-y-4 p-2 sticky top-[4.8rem]">
       <div className="bg-gray-200 px-6 py-4 flex flex-col shadow-md rounded-md gap-y-6">
@@ -161,12 +161,12 @@ const CalculatePrice = ({ cart  , dispatch}) => {
         </div>
         <div className="flex w-full justify-between items-center">
           <h1 className="font-semibold text-gray-800">Discount : </h1>
-          <h1 className="font-bold text-cyan-900 text-lg">{discountPrice}$</h1>
+          <h1 className="font-bold text-cyan-900 text-lg">   {originalPrice-finalPrice}$ <span className="font-normal  text-[12px]">{calcDiscount(originalPrice , finalPrice)}%</span> </h1>
         </div>
         <div className="flex w-full justify-between items-center">
           <h1 className="font-semibold text-gray-800">Final Price : </h1>
           <h1 className="font-bold text-cyan-900 text-lg">
-            {originalPrice - discountPrice}$
+            {finalPrice}$
           </h1>
         </div>
       </div>
