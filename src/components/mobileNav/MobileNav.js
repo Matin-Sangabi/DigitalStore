@@ -118,7 +118,7 @@ const MobileNav = () => {
                   >
                     <div className="w-16 p-1">
                       <img
-                        src={require(`./../../assets/images/${item.image[0].path}`)}
+                        src={`/images/${item.image[0].path}`}
                         alt="name"
                         className="max-w-full h-auto object-cover"
                       />

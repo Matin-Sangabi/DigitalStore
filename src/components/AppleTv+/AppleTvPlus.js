@@ -3,9 +3,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 import "./appleTv.css";
-import { Mousewheel, Pagination, Autoplay } from "swiper";
+import { Mousewheel, Pagination, Autoplay } from "swiper/modules";
 import { HiPlay} from "react-icons/hi";
-const swiper = [{}];
+
 const AppleTvPlus = () => {
   return (
     <div className="grid grid-cols-12 w-full mx-auto mb-24 text-gray-800  px-4">

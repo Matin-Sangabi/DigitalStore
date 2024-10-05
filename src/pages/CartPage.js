@@ -69,7 +69,7 @@ const CartItems = ({ cart, dispatch }) => {
           >
             <div className="w-20 h-auto">
               <img
-                src={require(`./../assets/images/${item.image[0].path}`)}
+                src={`/images/${item.image[0].path}`}
                 className="max-w-full h-auto"
                 alt="cart"
               />

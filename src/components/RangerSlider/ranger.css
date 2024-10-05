@@ -33,10 +33,7 @@
   transform: none;
 }
 
-.input-range__slider-container {
-  /* -webkit-transition: left 0.3s ease-out;
-    transition: left 0.3s ease-out; */
-}
+
 .input-range__label {
   color: #4b5563;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;

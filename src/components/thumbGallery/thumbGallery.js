@@ -5,7 +5,7 @@ import "swiper/css/free-mode";
 import "swiper/css/navigation";
 import "swiper/css/thumbs";
 import "./Thumb.css";
-import { FreeMode, Navigation, Thumbs } from "swiper";
+import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 const ThumbGallery = ({ product }) => {
   const [thumbsSwiper, setThumbsSwiper] = useState(null);
   return (
@@ -29,7 +29,7 @@ const ThumbGallery = ({ product }) => {
               key={item._id}
             >
               <img
-                src={require(`./../../assets/images/${item.path}`)}
+                src={`/images/${item.path}`}
                 alt={product.name}
                 className="max-w-full h-fit object-cover p-2"
               />
@@ -53,7 +53,7 @@ const ThumbGallery = ({ product }) => {
               className="bg-transparent ring-2 ring-cyan-900 rounded-md mx-4 cursor-pointer"
             >
               <img
-                src={require(`./../../assets/images/${item.path}`)}
+                src={`/images/${item.path}`}
                 alt={product.name}
                 className="max-w-full h-auto object-cover p-2"
               />
@@ -66,28 +66,4 @@ const ThumbGallery = ({ product }) => {
 };
 
 export default ThumbGallery;
-/**
- * <div className="w-80 h-auto flex mx-auto md:mx-0  ">
-        <img
-          src={require(`./../assets/images/${product.image[0].path}`)}
-          alt={product.name}
-          className="max-w-full h-auto object-cover p-2"
-        />
-      </div>
-      <div className="hidden md:flex flex-wrap items-center gap-4 px-0 md:px-6 flex-1 ">
-        {product.image.map((item) => {
-          return (
-            <div
-              className="w-32 h-32 lg:w-24 lg:h-28 ring ring-slate-700 rounded-md cursor-pointer p-2 flex justify-center items-center hover:ring outline-none border-none hover:ring-offset-2 hover:ring-slate-700 transition-all ease-in-out duration-300 shadow-md shadow-cyan-900"
-              key={item._id}
-            >
-              <img
-                src={require(`./../assets/images/${item.path}`)}
-                alt={product.name}
-                className="max-w-full h-auto object-cover p-2"
-              />
-            </div>
-          );
-        })}
-      </div>
- */
+

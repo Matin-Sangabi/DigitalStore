@@ -81,7 +81,7 @@ const ProductsList = ({ filterProducts }) => {
           >
             <div className="w-20 md:w-28 h-16 md:h-20 flex justify-center items-center group-hover:py-2 bg-opacity-80 bg-cyan-900 rounded-tr-3xl rounded-br-3xl rounded-tl-xl shadow-xl  mx-auto mb-8">
               <img
-                src={require(`./../assets/images/${item.image[0].path}`)}
+                src={`/images/${item.image[0].path}`}
                 alt={item.name}
                 className="max-w-full h-auto object-cover rotate-12"
               />

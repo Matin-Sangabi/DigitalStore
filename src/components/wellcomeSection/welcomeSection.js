@@ -13,7 +13,8 @@ const WellComeSection = () => {
     const getProduct = async () => {
       try {
         const { data } = await getProducts();
-        const headerSection = data.find((product) => product.headerSection);
+        const headerSection = data.find((product) => product.name === "iphone 13 pro Max");
+        console.log(headerSection)
         setProducts(headerSection);
       } catch (err) {
         console.log(console.log(err));
@@ -21,6 +22,10 @@ const WellComeSection = () => {
     };
     getProduct();
   }, []);
+
+
+  console.log(product && product?.image[2]?.path)
+
   return (
     <section className="w-full relative overflow-hidden z-0 pt-36 pb-28 px-0 flex items-center before:content-[''] before:absolute before:-right-full before:top-[30%]   before:w-[260%] before:h-[200%] before:bg-gray-400 before:opacity-50  before:-z-10 before:skew-y-[135deg] mb-20 ">
       {product && (
@@ -29,7 +34,7 @@ const WellComeSection = () => {
             <div className="col-span-12 md:col-span-6 flex flex-col gap-y-6 justify-center  order-2 md:order-1">
               <div className="flex flex-col gap-y-2">
                 <h1 className="text-2xl text-gray-800 font-bold ">
-                  {product.name}
+                  {product?.name}
                 </h1>
                 <h1 className="text-gray-800 font-bold text-4xl md:px-4 md:text-5xl lg:text-6xl">
                   has the best battery life ever on iPhone.
@@ -63,7 +68,7 @@ const WellComeSection = () => {
               <div className="md:w-96 md:h-auto md:max-h-96">
                 {product && (
                   <img
-                    src={require(`./../../assets/images/${product.image[3].path}`)}
+                    src={`/images/${product?.image[2]?.path}`}
                     className="max-w-full w-[330px] h-auto object-cover"
                     alt="name"
                   />

@@ -2,11 +2,12 @@ import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useProducts } from "../../provider/productsProvider";
 import ScrollOffset from "../scroll/ScrollOffset";
+import { calcDiscount } from "../../utils/CalculateProductsOffer";
 const OfferSection = () => {
   const products = useProducts();
   const [offerProducts, setOfferProducts] = useState(null);
   useEffect(() => {
-    const offer = products.filter((product) => product.offPrice.isOff);
+    const offer = products.filter((product) => product.offPrice);
     setOfferProducts(offer);
   }, [products]);
 
@@ -37,7 +38,7 @@ const OfferSection = () => {
       <div className="col-span-12 md:col-span-9 flex flex-col">
         {offerProducts.length !== 0 ? (
           <div
-            className="flex flex-nowrap items-end overflow-x-auto mb-4 w-full gap-x-8 md:gap-x-12 justify-between scroll-smooth scrollbar"
+            className="flex flex-nowrap items-end overflow-x-auto mb-4 w-full gap-x-8 md:gap-x-12  scroll-smooth scrollbar"
             ref={ref}
           >
             {offerProducts.map((offer) => {
@@ -47,14 +48,14 @@ const OfferSection = () => {
                   className="flex flex-col items-center mb-6"
                   key={offer._id}
                 >
-                  <div className="w-32 h-auto relative flex items-center mb-4">
+                  <div className="w-32 h-auto relative flex items-center justify-center mb-4">
                     <img
-                      src={require(`./../../assets/images/${offer.image[0].path}`)}
+                      src={`/images/${offer.image[0].path}`}
                       alt={offer.name}
                       className="max-w-full h-auto object-cover"
                     />
                     <span className="w-10 h-10 rounded-full bg-cyan-900 absolute -right-3 flex items-center justify-center text-slate-100 text-sm font-semibold">
-                      {offer.offPrice.cent}
+                      {calcDiscount(offer?.price , offer?.offPrice)} %
                     </span>
                   </div>
                   <div className="flex flex-col gap-4">
@@ -66,7 +67,7 @@ const OfferSection = () => {
                           {offer.price} $
                         </span>{" "}
                         <span className="font-bold text-sm  text-cyan-900">
-                          {offer.price - offer.discount}$
+                          {offer.offPrice}$
                         </span>
                       </h2>
                     </div>
@@ -76,7 +77,7 @@ const OfferSection = () => {
             })}
           </div>
         ) : (
-          <span>Loading...</span>
+          <div className="w-full flex items-center justify-center h-full">No Offer's Yet</div>
         )}
         <div
           className={`block ${

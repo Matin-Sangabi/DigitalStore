@@ -62,7 +62,7 @@ const Login = () => {
             <div className="flex flex-col gap-4 justify-center items-center mt-12 w-full h-fit ">
               <div className="w-10">
                 <img
-                  src={require("./../assets/images/Apple_logo.png")}
+                  src={"/images/Apple_logo.png"}
                   className="max-w-full"
                   alt="logo"
                 />

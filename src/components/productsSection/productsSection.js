@@ -33,7 +33,7 @@ const ProductsSection = () => {
                 )}
                 <div className="w-40 h-52 p-2 mb-4">
                   <img
-                    src={require(`./../../assets/images/${product.image[0].path}`)}
+                    src={`/images/${product.image[0].path}`}
                     alt=""
                     className="max-w-full h-auto object-cover"
                   />

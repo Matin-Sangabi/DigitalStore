@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/effect-cards";
 
 // import required modules
-import { Autoplay, EffectCards } from "swiper";
+import { Autoplay, EffectCards } from "swiper/modules";
 import { Link } from "react-router-dom";
 
 const AdvertisingSection2 = () => {
@@ -75,7 +75,7 @@ const AdvertisingSection2 = () => {
         <SwiperSlide className="bg-[conic-gradient(at_top_right,_var(--tw-gradient-stops))] from-gray-900 via-gray-100 to-gray-900 rounded-lg">
           <Link to={"/products?cat=ipad"}>
             <img
-              src={require("./../../assets/images/m2-ipad-pro-title-removebg-preview.png")}
+              src={"/images/m2-ipad-pro-title-removebg-preview.png"}
               alt="Ipad pro"
               className="max-w-full h-auto object-cover"
             />
@@ -84,7 +84,7 @@ const AdvertisingSection2 = () => {
         <SwiperSlide className="bg-[conic-gradient(at_left,_var(--tw-gradient-stops))] from-blue-100 via-blue-300 to-blue-500 rounded-lg">
           <Link to={"/products?cat=ipad"}>
             <img
-              src={require("./../../assets/images/accessories_hero__f5hy8spj2ouy_large.png")}
+              src={"/images/accessories_hero__f5hy8spj2ouy_large.png"}
               alt="Ipad Pro"
               className="w-40 md:w-56 object-cover"
             />

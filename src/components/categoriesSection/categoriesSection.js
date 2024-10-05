@@ -24,7 +24,7 @@ const CategoriesSection = () => {
           </div>
           <div className="col-span-5 w-28 lg:w-24 h-auto">
             <img
-              src={require("./../../assets/images/watch/MKUQ3_VW_34FR+watch-44-alum-spacegray-nc-se_VW_34FR_WF_CO-removebg-preview.png")}
+              src={"/images/watch/MKUQ3_VW_34FR+watch-44-alum-spacegray-nc-se_VW_34FR_WF_CO-removebg-preview.png"}
               alt="categories"
               className="max-w-full h-auto object-cover"
             />
@@ -45,7 +45,7 @@ const CategoriesSection = () => {
           </div>
           <div className="col-span-5 w-32 lg:w-24 h-auto">
             <img
-              src={require("./../../assets/images/phone/iphone-12-storage-select-202207-5-4inch-purple.png")}
+              src={"/images/phone/iphone-12-storage-select-202207-5-4inch-purple.png"}
               alt="categories"
               className="max-w-full h-auto object-cover"
             />
@@ -63,7 +63,7 @@ const CategoriesSection = () => {
           </div>
           <div className="col-span-5 w-36 lg:w-28 h-auto">
             <img
-              src={require("./../../assets/images/ipad/ipad-pro-11-select-cell-spacegray-202104-removebg-preview.png")}
+              src={"/images/ipad/ipad-pro-11-select-cell-spacegray-202104-removebg-preview.png"}
               alt="categories"
               className="max-w-full h-auto object-cover"
             />
@@ -82,7 +82,7 @@ const CategoriesSection = () => {
           </div>
           <div className="col-span-5 w-40 lg:w-36 h-auto">
             <img
-              src={require("./../../assets/images/airpod/MWP22_AV1-removebg-preview.png")}
+              src={"/images/airpod/MWP22_AV1-removebg-preview.png"}
               alt="categories"
               className="max-w-full h-auto object-cover"
             />

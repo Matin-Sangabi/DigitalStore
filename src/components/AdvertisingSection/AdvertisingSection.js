@@ -23,7 +23,7 @@ const AdvertisingSection = () => {
               </div>
               <div className="w-80 md:w-96">
                 <img
-                  src={require("./../../assets/images/ocean_ready__eho37eb5efgy_large-removebg-preview.png")}
+                  src={"/images/ocean_ready__eho37eb5efgy_large-removebg-preview.png"}
                   className="max-w-full h-auto object-cover"
                   alt="Apple Watch Pro"
                 />

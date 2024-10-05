@@ -121,7 +121,7 @@ const CheckoutPage = () => {
                     <div className="flex flex-col" key={item._id}>
                       <div className="w-20 h-20">
                         <img
-                          src={require(`./../assets/images/${item.image[0].path}`)}
+                          src={`/images/${item.image[0].path}`}
                           alt={cart.name}
                           className="max-w-full object-cover h-20"
                         />

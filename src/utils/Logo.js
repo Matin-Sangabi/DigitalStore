@@ -3,7 +3,7 @@ const LogoIcon = () => {
     return ( 
         <Link to="/">
             <img
-              src={require("./../assets/images/Apple Logo PNG Vector (AI) Free Download.png")}
+              src={"/images/Apple Logo PNG Vector (AI) Free Download.png"}
               className="w-10 h-10 object-cover block"
               alt="logo"
             />

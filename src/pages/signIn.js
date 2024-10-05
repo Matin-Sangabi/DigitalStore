@@ -74,12 +74,12 @@ const SignIn = () => {
   return (
     <Layout title={'Sign In'}>
       <section className="pt-24 grid grid-cols-12 gap-8 md:mx-auto max-w-screen-xl">
-        <div className="md:col-span-6  lg:col-span-7 w-full bg-hero-pattern bg-center bg-no-repeat bg-cover h-[85vh] rounded-md  hidden md:flex  justify-start items-center"></div>
+        <div className="md:col-span-6  lg:col-span-7 w-full  bg-center bg-no-repeat bg-cover h-[85vh] rounded-md  hidden md:flex  justify-start items-center"></div>
         <div className="col-span-12 md:col-span-6 lg:col-span-5 mb-32 ">
           {!Auth ? <div className="flex flex-col gap-4 justify-center items-center mt-12 w-full h-fit ">
             <div className="w-10">
               <img
-                src={require("./../assets/images/Apple_logo.png")}
+                src={"/images/Apple_logo.png"}
                 className="max-w-full"
                 alt="logo"
               />
