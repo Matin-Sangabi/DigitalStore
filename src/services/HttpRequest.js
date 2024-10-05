@@ -3,7 +3,7 @@ import axios from "axios";
 axios.defaults.baseURL =
   process.env.NODE_ENV === "development"
     ? "https://journal-trade-jkrq.vercel.app/api"
-    : "https://digitalnodestore.iran.liara.run/api";
+    : "https://journal-trade-jkrq.vercel.app/api";
 
 export const http = {
   get: axios.get,
